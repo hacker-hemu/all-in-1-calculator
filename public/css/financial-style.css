@@ -1,0 +1,142 @@
+/* General Styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e9ecef;
+    color: #333;
+    line-height: 1.6;
+}
+
+#search-item {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.ccontainer {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #ffffff;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    border: 2px solid #dee2e6;
+}
+
+/* Header Styling */
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #007BFF;
+}
+
+h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 2rem 0 1rem;
+    color: #495057;
+    border-bottom: 2px solid #007BFF;
+    display: inline-block;
+    padding-bottom: 0.3rem;
+}
+
+/* Form Styling */
+.ccontainer form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #343a40;
+}
+
+.ccontainer form input {
+    width: 100%;
+    padding: 0.7rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: 0.3s;
+}
+
+form input:focus {
+    border-color: #007BFF;
+    outline: none;
+    box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.5);
+}
+
+.ccontainer form button {
+    display: block;
+    /* width: 100%; */
+    padding: 0.8rem;
+    background: #007BFF;
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.ccontainer form button:hover {
+    background: #0056b3;
+}
+
+/* Result Box Styling */
+div[id$="Result"] {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #e9f7e9;
+    border: 1px solid #d4edda;
+    color: #155724;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Section Styling */
+section {
+    margin-bottom: 3rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+section:hover {
+    background: #e9ecef;
+    transform: translateY(-3px);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Add a subtle hover effect for sections */
+section h2:hover {
+    color: #0056b3;
+    transition: 0.3s;
+}
+
+/* Media Query for Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    form input, form button {
+        font-size: 0.9rem;
+    }
+}

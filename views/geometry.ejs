@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All in one Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- font awesome cdn file -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+        integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            color: #343a40;
+        }
+
+        /* Section Heading */
+        h2 {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            color: #007bff;
+        }
+
+        /* Calculator Container */
+        .calculator-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            /* Three forms per row */
+            gap: 20px;
+            /* Space between forms */
+            max-width: 1200px;
+            margin: 0 auto;
+            /* Center container */
+            padding: 20px;
+        }
+
+        /* Calculator Card */
+        .calculator {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Form Labels */
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        /* Form Inputs */
+        .calculator-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        /* Form Buttons */
+        .calculator-container button {
+            /* width: 100%; */
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .calculator-container {
+                grid-template-columns: repeat(2, 1fr);
+                /* Two forms per row */
+            }
+        }
+
+        @media (max-width: 600px) {
+            .calculator-container {
+                grid-template-columns: 1fr;
+                /* One form per row */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="bg-dark text-white sticky-top">
+        <div class="container p-0- m-0">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <a class="navbar-brand" href="#">
+                    <img src="images/logo.png" alt="Logo" class="logo profile rounded" height="50px">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button"
+                                data-bs-toggle="dropdown">Category</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/scientific">Scientific Calculator</a></li>
+                                <li><a class="dropdown-item" href="/financial">Financial Calculators</a></li>
+                                <li><a class="dropdown-item" href="/health">Health and Fitness Calculators</a></li>
+                                <li><a class="dropdown-item" href="/conversion">Conversion Calculators</a></li>
+                                <li><a class="dropdown-item" href="/algebra">Math and Algebra Calculators</a></li>
+                                <li><a class="dropdown-item" href="/geometry">Geometry Calculators</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-item" id="login-buttons"><a class="nav-link" href="#" data-bs-toggle="modal"
+                                data-bs-target="#loginModal">Login</a></li>
+                        <li class="dropdown-item" id="signup-buttons"><a class="nav-link" href="#"
+                                data-bs-toggle="modal" data-bs-target="#signupModal">Signup</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal"
+                                data-bs-target="#contactModal">Contact</a></li>
+                    </ul>
+                    <form class="me-3 position-relative">
+                        <input type="text" id="searchBar" class="form-control" placeholder="Search for a calculator..."
+                            onkeyup="searchCalculators()">
+                        <ul id="calculatorList" class="dropdown-menu w-100 mt-1 overflow-hidden">
+                            <!-- Calculator names dynamically filtered here with anchor tags -->
+                            <li class="dropdown-item calculator-item"><a href="/scientific">Scientific Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/financial">Simple Interest
+                                    Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/financial">Compound Interest
+                                    Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/financial">Currency Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/financial">Salary Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/financial">Retirement Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/financial">Sales and Tax Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/financial">Investment Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/health">BMI Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/health">BMR Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/health">Calorie Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/health">Body Fat Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/health">Ideal Weight Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/conversion">Length Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/conversion">Age Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/conversion">Hour to Minute & Seconds
+                                    Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/conversion">Date Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/conversion">GPA Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/conversion">Height Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/conversion">Password Generator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/conversion">Bill and Tip Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">2D Distance Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">3D Distance Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">Equilateral Triangle
+                                    Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">Isosceles Triangle
+                                    Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">Right-Angled Triangle
+                                    Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">Cube Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">Cone Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">Circle Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">Cylinder Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">Rectangle Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">Square Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">Sphere Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Complex Number Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Boolean Algebra Simplifier</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Partial Fraction Decomposer</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Inequality Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Flow Rate Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Impulse Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Factorization Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Percentage Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Exponential Formulas
+                                    Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Cube of a Number Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Cube Root Calculator</a></li>
+                        </ul>
+                    </form>
+                    <div class="flex-shrink-0 dropdown" id="profiles-div">
+                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="images/user.png" alt="mdo" width="32" height="32" class="rounded-circle border">
+                        </a>
+                        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                            <li class="dropdown-item d-none" id="username"></li>
+                            <li class="dropdown-item d-none" id="logout-button"><a class="nav-link text-danger"
+                                    href="/logout">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Calculators Section -->
+    <h2 align"center">Geometrics Calculators</h2>
+    <div class="calculator-container">
+
+        <!-- 2D Distance Calculator -->
+        <div class="calculator">
+            <h3>2D Distance Calculator</h3>
+            <form id="form-2d">
+                <input type="number" id="x1" name="x1" placeholder="X1" required>
+                <input type="number" id="y1" name="y1" placeholder="Y1" required>
+                <input type="number" id="x2" name="x2" placeholder="X2" required>
+                <input type="number" id="y2" name="y2" placeholder="Y2" required>
+
+                <!-- New buttons for Save, Print, Share -->
+                <div class="row mt-2 d-flex align-items-center">
+                    <button type="submit" class="col-4">Calculate</button>
+                    <!-- <button class="col-3" > -->
+                    <i class="fa-solid fa-floppy-disk col-2" title="Save"></i>
+                    <i class="fa-solid fa-star col-2 favorite-button" title="Add to Favorite" id="2d-clc"
+                        onclick="toggleFavorite('2d-clc', '2D Distance Calculator')"></i>
+
+                    <i class="fa-solid fa-print col-2" title="Print" id="print-btn"></i>
+                    <i class="fa-solid fa-share col-2" title="Share" id="share-btn"></i>
+                    <!-- </button> -->
+                    <!-- <button class="button col-3" id="print-btn">Print</button>
+                    <button class="button col-3" id="share-btn">Share</button> -->
+                </div>
+            </form>
+            <div id="result-2d-distance"></div>
+        </div>
+
+        <!-- 3D Distance Calculator -->
+        <div class="calculator">
+            <h3>3D Distance Calculator</h3>
+            <form id="form-3d">
+                <input type="number" id="x1-3d" name="x1-3d" placeholder="X1" required>
+                <input type="number" id="y1-3d" name="y1-3d" placeholder="Y1" required>
+                <input type="number" id="z1-3d" name="z1-3d" placeholder="Z1" required>
+                <input type="number" id="x2-3d" name="x2-3d" placeholder="X2" required>
+                <input type="number" id="y2-3d" name="y2-3d" placeholder="Y2" required>
+                <input type="number" id="z2-3d" name="z2-3d" placeholder="Z2" required>
+                <!-- New buttons for Save, Print, Share -->
+                <div class="row mt-2 d-flex align-items-center">
+                    <button type="submit" class="col-4">Calculate</button>
+                    <!-- <button class="col-3" > -->
+                    <i class="fa-solid fa-floppy-disk col-2" title="Save"></i>
+                    <i class="fa-solid fa-star col-2 favorite-button" title="Add to Favorite" id="3d-clc"
+                        onclick="toggleFavorite('3d-clc', '3D Distance Calculator')"></i>
+                    <i class="fa-solid fa-print col-2" title="Print" id="print-btn"></i>
+                    <i class="fa-solid fa-share col-2" title="Share" id="share-btn"></i>
+                    <!-- </button> -->
+                    <!-- <button class="button col-3" id="print-btn">Print</button>
+                    <button class="button col-3" id="share-btn">Share</button> -->
+                </div>
+            </form>
+            <div id="result-3d-distance"></div>
+        </div>
+
+        <!-- Equilateral Triangle Calculator -->
+        <div class="calculator">
+            <h3>Equilateral Triangle Calculator</h3>
+            <form id="form-equilateral">
+                <input type="number" id="side" name="side" placeholder="Side length" required>
+                <div class="row mt-2 d-flex align-items-center">
+                    <button type="submit" class="col-4">Calculate</button>
+                    <!-- <button class="col-3" > -->
+                    <i class="fa-solid fa-floppy-disk col-2" title="Save"></i>
+                    <i class="fa-solid fa-star col-2 favorite-button" title="Add to Favorite" id="e-tringle-clc"
+                        onclick="toggleFavorite('e-tringle-clc', '3D Distance Calculator')"></i>
+                    <i class="fa-solid fa-print col-2" title="Print" id="print-btn"></i>
+                    <i class="fa-solid fa-share col-2" title="Share" id="share-btn"></i>
+                </div>
+            </form>
+            <div id="result-equilateral"></div>
+        </div>
+
+        <!-- Isosceles Triangle Calculator -->
+        <div class="calculator">
+            <h3>Isosceles Triangle Calculator</h3>
+            <form id="form-isosceles">
+                <input type="number" id="base" name="base" placeholder="Base length" required>
+                <input type="number" id="side-length" name="sideLength" placeholder="Side length" required>
+                <div class="row mt-2 d-flex align-items-center">
+                    <button type="submit" class="col-4">Calculate</button>
+                    <!-- <button class="col-3" > -->
+                    <i class="fa-solid fa-floppy-disk col-2" title="Save"></i>
+                    <i class="fa-solid fa-star col-2 favorite-button" title="Add to Favorite" id="isosceles-tringle-clc"
+                        onclick="toggleFavorite('e-tringle-clc', '3D Distance Calculator')"></i>
+                    <i class="fa-solid fa-print col-2" title="Print" id="print-btn"></i>
+                    <i class="fa-solid fa-share col-2" title="Share" id="share-btn"></i>
+                    <!-- </button> -->
+                    <!-- <button class="button col-3" id="print-btn">Print</button>
+                    <button class="button col-3" id="share-btn">Share</button> -->
+                </div>
+            </form>
+            <div id="result-isosceles"></div>
+        </div>
+
+        <!-- Right-Angled Triangle Calculator -->
+        <div class="calculator">
+            <h3>Right-Angled Triangle Calculator</h3>
+            <form id="form-right-angled">
+                <input type="number" id="base-right" name="base" placeholder="Base length" required>
+                <input type="number" id="height-right" name="height" placeholder="Height length" required>
+                <div class="row mt-2 d-flex align-items-center">
+                    <button type="submit" class="col-4">Calculate</button>
+                    <!-- <button class="col-3" > -->
+                    <i class="fa-solid fa-floppy-disk col-2" title="Save"></i>
+                    <i class="fa-solid fa-star col-2 favorite-button" title="Add to Favorite" id="right-tringle-clc"
+                        onclick="toggleFavorite('right-tringle-clc', '3D Distance Calculator')"></i>
+                    <i class="fa-solid fa-print col-2" title="Print" id="print-btn"></i>
+                    <i class="fa-solid fa-share col-2" title="Share" id="share-btn"></i>
+                    <!-- </button> -->
+                    <!-- <button class="button col-3" id="print-btn">Print</button>
+                    <button class="button col-3" id="share-btn">Share</button> -->
+                </div>
+            </form>
+            <div id="result-right-angled"></div>
+        </div>
+
+        <!-- Cube Calculator -->
+        <div class="calculator">
+            <h3>Cube Calculator</h3>
+            <form id="form-cube">
+                <input type="number" id="cube-side" name="side" placeholder="Side length" required>
+                <div class="row mt-2 d-flex align-items-center">
+                    <button type="submit" class="col-4">Calculate</button>
+                    <!-- <button class="col-3" > -->
+                    <i class="fa-solid fa-floppy-disk col-2" title="Save"></i>
+                    <i class="fa-solid fa-star col-2 favorite-button" title="Add to Favorite" id="cube-tringle-clc"
+                        onclick="toggleFavorite('cube-tringle-clc', '3D Distance Calculator')"></i>
+                    <i class="fa-solid fa-print col-2" title="Print" id="print-btn"></i>
+                    <i class="fa-solid fa-share col-2" title="Share" id="share-btn"></i>
+                </div>
+            </form>
+            <div id="result-cube"></div>
+        </div>
+
+        <!-- Cone Calculator -->
+        <div class="calculator">
+            <h3>Cone Calculator</h3>
+            <form id="form-cone">
+                <input type="number" id="cone-radius" name="radius" placeholder="Radius" required>
+                <input type="number" id="cone-height" name="height" placeholder="Height" required>
+                <div class="row mt-2 d-flex align-items-center">
+                    <button type="submit" class="col-4">Calculate</button>
+                    <!-- <button class="col-3" > -->
+                    <i class="fa-solid fa-floppy-disk col-2" title="Save"></i>
+                    <i class="fa-solid fa-star col-2 favorite-button" title="Add to Favorite" id="cone-tringle-clc"
+                        onclick="toggleFavorite('cone-tringle-clc', '3D Distance Calculator')"></i>
+                    <i class="fa-solid fa-print col-2" title="Print" id="print-btn"></i>
+                    <i class="fa-solid fa-share col-2" title="Share" id="share-btn"></i>
+                </div>
+            </form>
+            <div id="result-cone"></div>
+        </div>
+
+        <!-- Circle Calculator -->
+        <div class="calculator">
+            <h3>Circle Calculator</h3>
+            <form id="form-circle">
+                <input type="number" id="circle-radius" name="radius" placeholder="Radius" required>
+                <div class="row mt-2 d-flex align-items-center">
+                    <button type="submit" class="col-4">Calculate</button>
+                    <!-- <button class="col-3" > -->
+                    <i class="fa-solid fa-floppy-disk col-2" title="Save"></i>
+                    <i class="fa-solid fa-star col-2 favorite-button" title="Add to Favorite" id="circle-tringle-clc"
+                        onclick="toggleFavorite('circle-tringle-clc', '3D Distance Calculator')"></i>
+                    <i class="fa-solid fa-print col-2" title="Print" id="print-btn"></i>
+                    <i class="fa-solid fa-share col-2" title="Share" id="share-btn"></i>
+                </div>
+            </form>
+            <div id="result-circle"></div>
+        </div>
+
+        <!-- Cylinder Calculator -->
+        <div class="calculator">
+            <h3>Cylinder Calculator</h3>
+            <form id="form-cylinder">
+                <input type="number" id="cylinder-radius" name="radius" placeholder="Radius" required>
+                <input type="number" id="cylinder-height" name="height" placeholder="Height" required>
+                <div class="row mt-2 d-flex align-items-center">
+                    <button type="submit" class="col-4">Calculate</button>
+                    <!-- <button class="col-3" > -->
+                    <i class="fa-solid fa-floppy-disk col-2" title="Save"></i>
+                    <i class="fa-solid fa-star col-2 favorite-button" title="Add to Favorite" id="cylinder-tringle-clc"
+                        onclick="toggleFavorite('cylinder-tringle-clc', '3D Distance Calculator')"></i>
+                    <i class="fa-solid fa-print col-2" title="Print" id="print-btn"></i>
+                    <i class="fa-solid fa-share col-2" title="Share" id="share-btn"></i>
+                </div>
+            </form>
+            <div id="result-cylinder"></div>
+        </div>
+
+        <!-- Rectangle Calculator -->
+        <div class="calculator">
+            <h3>Rectangle Calculator</h3>
+            <form id="form-rectangle">
+                <input type="number" id="rectangle-length" name="length" placeholder="Length" required>
+                <input type="number" id="rectangle-width" name="width" placeholder="Width" required>
+                <div class="row mt-2 d-flex align-items-center">
+                    <button type="submit" class="col-4">Calculate</button>
+                    <!-- <button class="col-3" > -->
+                    <i class="fa-solid fa-floppy-disk col-2" title="Save"></i>
+                    <i class="fa-solid fa-star col-2 favorite-button" title="Add to Favorite" id="rect-tringle-clc"
+                        onclick="toggleFavorite('rect-tringle-clc', '3D Distance Calculator')"></i>
+                    <i class="fa-solid fa-print col-2" title="Print" id="print-btn"></i>
+                    <i class="fa-solid fa-share col-2" title="Share" id="share-btn"></i>
+                </div>
+            </form>
+            <div id="result-rectangle"></div>
+        </div>
+
+        <!-- Square Calculator -->
+        <div class="calculator">
+            <h3>Square Calculator</h3>
+            <form id="form-square">
+                <input type="number" id="square-side" name="side" placeholder="Side length" required>
+                <div class="row mt-2 d-flex align-items-center">
+                    <button type="submit" class="col-4">Calculate</button>
+                    <!-- <button class="col-3" > -->
+                    <i class="fa-solid fa-floppy-disk col-2" title="Save"></i>
+                    <i class="fa-solid fa-star col-2 favorite-button" title="Add to Favorite" id="square-tringle-clc"
+                        onclick="toggleFavorite('square-tringle-clc', '3D Distance Calculator')"></i>
+                    <i class="fa-solid fa-print col-2" title="Print" id="print-btn"></i>
+                    <i class="fa-solid fa-share col-2" title="Share" id="share-btn"></i>
+                </div>
+            </form>
+            <div id="result-square"></div>
+        </div>
+
+        <!-- Sphere Calculator -->
+        <div class="calculator">
+            <h3>Sphere Calculator</h3>
+            <form id="form-sphere">
+                <input type="number" id="sphere-radius" name="radius" placeholder="Radius" required>
+                <div class="row mt-2 d-flex align-items-center">
+                    <button type="submit" class="col-4">Calculate</button>
+                    <!-- <button class="col-3" > -->
+                    <i class="fa-solid fa-floppy-disk col-2" title="Save"></i>
+                    <i class="fa-solid fa-star col-2 favorite-button" title="Add to Favorite" id="shpere-tringle-clc"
+                        onclick="toggleFavorite('shpere-tringle-clc', '3D Distance Calculator')"></i>
+                    <i class="fa-solid fa-print col-2" title="Print" id="print-btn"></i>
+                    <i class="fa-solid fa-share col-2" title="Share" id="share-btn"></i>
+                </div>
+            </form>
+            <div id="result-sphere"></div>
+        </div>
+
+    </div>
+    </div>
+
+    <!-- Feedback message -->
+    <p id="share-feedback" style="color: green; font-size: 14px;"></p>
+
+    <!-- Result display -->
+    <span id="result" class="result-text"></span>
+
+    </div>
+    </div>
+
+
+
+
+    <!-- Modals -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Login</h5>
+                </div>
+                <form action="/login" method="POST">
+                    <div class="modal-body">
+                        <input type="text" id="loginUsername" placeholder="Username" name="username"
+                            class="form-control mb-3">
+                        <input type="password" id="loginPassword" placeholder="Password" name="password"
+                            class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Login">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="signupModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Signup</h5>
+                </div>
+                <form action="/register" method="POST">
+                    <div class="modal-body">
+                        <input type="text" name="username" id="signupUsername" placeholder="Username"
+                            class="form-control mb-3">
+                        <input type="email" name="email" id="signupEmail" placeholder="Email" class="form-control mb-3">
+                        <input type="number" name="mobile" id="signupmob" placeholder="Mobile"
+                            class="form-control mb-3">
+                        <input type="password" name="password" id="signupPassword" placeholder="Password"
+                            class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit">Signup</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="contactModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Contact Us</h5>
+                </div>
+                <form action="/contact" method="POST">
+                    <div class="modal-body">
+                        <input type="text" id="contactName" placeholder="Name" class="form-control mb-3" name="name"
+                            required>
+                        <input type="email" id="contactEmail" placeholder="Email" class="form-control mb-3" name="email"
+                            required>
+                        <textarea id="contactMessage" placeholder="Message" class="form-control"
+                            name="message"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal fade" id="calculatorModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Calculator</h5>
+                </div>
+                <div class="modal-body">
+                    <div id="calculatorContent">
+                        <!-- Calculator content dynamically loaded via JavaScript -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Feedback message -->
+    <p id="share-feedback" style="color: green; font-size: 14px;"></p>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/geometry-script.js"></script> <!-- Your modal.js file -->
+
+    <script>
+        // Function to handle form submission and display results dynamically
+        function handleFormSubmit(formId, url, resultId) {
+            // 2D Distance Calculator
+            $('#form-2d').off('submit').on('submit', function (e) {
+                e.preventDefault();
+                const formData = $(this).serialize();
+                console.log("Form data:", formData); // Log form data to verify
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/calculate-2d-distance',
+                    data: formData,
+                    success: function (data) {
+                        console.log("Response from server:", data);
+                        let resultText = '';
+                        if (data.error) {
+                            resultText = `<p>Error: ${data.error}</p>`;
+                        } else {
+                            resultText = `<p><strong>Distance:</strong> ${data.distance2D}</p>`;
+                        }
+                        $('#result-2d-distance').html(resultText);
+                    },
+                    error: function (err) {
+                        console.error('Error:', err);
+                    }
+                });
+
+                console.log("Form data:", formData);
+            });
+
+            // 3D Distance Calculator
+
+            $('#form-3d').off('submit').on('submit', function (e) {
+                e.preventDefault();
+                const formData = $(this).serialize();
+                console.log("Form data:", formData); // Log form data to verify
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/calculate-3d-distance',
+                    data: formData,
+                    success: function (data) {
+                        console.log("Response from server:", data);
+                        let resultText = '';
+                        if (data.error) {
+                            resultText = `<p>Error: ${data.error}</p>`;
+                        } else {
+                            resultText = `<p><strong>Distance:</strong> ${data.distance3D}</p>`;
+                        }
+                        $('#result-3d-distance').html(resultText);
+                    },
+                    error: function (err) {
+                        console.error('Error:', err);
+                    }
+                });
+
+                console.log("Form data:", formData);
+            });
+
+            // Equilateral Triangle Calculator
+
+            $('#form-equilateral').off('submit').on('submit', function (e) {
+                e.preventDefault();
+                const formData = $(this).serialize();
+                console.log("Form data:", formData);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/calculate-equilateral-triangle',
+                    data: formData,
+                    success: function (data) {
+                        console.log("Response from server:", data);
+                        let resultText = '';
+                        if (data.error) {
+                            resultText = `<p>Error: ${data.error}</p>`;
+                        } else {
+                            resultText = `<p><strong>Area:</strong> ${data.area}</p>`;
+                        }
+                        $('#result-equilateral').html(resultText);
+                    },
+                    error: function (err) {
+                        console.error('Error:', err);
+                    }
+                });
+
+                console.log("Form data:", formData);
+            });
+
+            // Isosceles Triangle Calculator
+
+            $('#form-isosceles').off('submit').on('submit', function (e) {
+                e.preventDefault();
+                const formData = $(this).serialize();
+                console.log("Form data:", formData);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/calculate-isosceles',
+                    data: formData,
+                    success: function (data) {
+                        console.log("Response from server:", data);
+                        let resultText = '';
+                        if (data.error) {
+                            resultText = `<p>Error: ${data.error}</p>`;
+                        } else {
+                            resultText = `<p><strong>Area:</strong> ${data.areaIsosceles}</p><p><strong>Perimeter:</strong> ${data.perimeterIsosceles}</p>`;
+                        }
+                        $('#result-isosceles').html(resultText);
+                    },
+                    error: function (err) {
+                        console.error('Error:', err);
+                    }
+                });
+
+                console.log("Form data:", formData);
+            });
+
+            // Right-Angled Triangle Calculator
+
+            $('#form-right-angled').off('submit').on('submit', function (e) {
+
+                e.preventDefault();
+                const formData = $(this).serialize();
+                console.log("Form data:", formData);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/calculate-right-angled-triangle',
+                    data: formData,
+                    success: function (data) {
+                        console.log("Response from server:", data);
+                        let resultText = '';
+                        if (data.error) {
+                            resultText = `<p>Error: ${data.error}</p>`;
+                        } else {
+                            resultText = `<p><strong>Hypotenuse:</strong> ${data.hypotenuse}</p> <p><strong>Area:</strong> ${data.area}</p>`;
+                        }
+                        $('#result-right-angled').html(resultText);
+                    },
+                    error: function (err) {
+                        console.error('Error:', err);
+                    }
+                });
+
+                console.log("Form data:", formData);
+            });
+
+            // Cube Calculator
+
+            $('#form-cube').off('submit').on('submit', function (e) {
+
+                e.preventDefault();
+                const formData = $(this).serialize();
+                console.log("Form data:", formData);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/calculate-cube',
+                    data: formData,
+                    success: function (data) {
+                        console.log("Response from server:", data);
+                        let resultText = '';
+                        if (data.error) {
+                            resultText = `<p>Error: ${data.error}</p>`;
+                        } else {
+                            resultText = `<p><strong>Volume:</strong> ${data.volume}</p>`;
+                        }
+                        $('#result-cube').html(resultText);
+                    },
+                    error: function (err) {
+                        console.error('Error:', err);
+                    }
+                });
+
+                console.log("Form data:", formData);
+            });
+
+            // Cone Calculator
+
+            $('#form-cone').off('submit').on('submit', function (e) {
+                e.preventDefault();
+                const formData = $(this).serialize();
+                console.log("Form data:", formData);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/calculate-cone',
+                    data: formData,
+                    success: function (data) {
+                        console.log("Response from server:", data);
+                        let resultText = '';
+                        if (data.error) {
+                            resultText = `<p>Error: ${data.error}</p>`;
+                        } else {
+                            resultText = `<p><strong>Volume:</strong> ${data.volume}</p>`;
+                        }
+                        $('#result-cone').html(resultText);
+                    },
+                    error: function (err) {
+                        console.error('Error:', err);
+                    }
+                });
+
+                console.log("Form data:", formData);
+            });
+
+            // Circle Calculator
+
+            $('#form-circle').off('submit').on('submit', function (e) {
+
+                e.preventDefault();
+                const formData = $(this).serialize();
+                console.log("Form data:", formData);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/calculate-circle',
+                    data: formData,
+                    success: function (data) {
+                        console.log("Response from server:", data);
+                        let resultText = '';
+                        if (data.error) {
+                            resultText = `<p>Error: ${data.error}</p>`;
+                        } else {
+                            resultText = `<p><strong>Area:</strong> ${data.area}</p>`;
+                        }
+                        $('#result-circle').html(resultText);
+                    },
+                    error: function (err) {
+                        console.error('Error:', err);
+                    }
+                });
+
+                console.log("Form data:", formData);
+            });
+
+            // Cylinder Calculator
+
+            $('#form-cylinder').off('submit').on('submit', function (e) {
+                e.preventDefault();
+                const formData = $(this).serialize();
+                console.log("Form data:", formData);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/calculate-cylinder',
+                    data: formData,
+                    success: function (data) {
+                        console.log("Response from server:", data);
+                        let resultText = '';
+                        if (data.error) {
+                            resultText = `<p>Error: ${data.error}</p>`;
+                        } else {
+                            resultText = `<p><strong>Volume:</strong> ${data.volume}</p>`;
+                        }
+                        $('#result-cylinder').html(resultText);
+                    },
+                    error: function (err) {
+                        console.error('Error:', err);
+                    }
+                });
+
+                console.log("Form data:", formData);
+            });
+
+            // Rectangle Calculator
+
+
+            $('#form-rectangle').off('submit').on('submit', function (e) {
+                e.preventDefault();
+                const formData = $(this).serialize();
+                console.log("Form data:", formData);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/calculate-rectangle',
+                    data: formData,
+                    success: function (data) {
+                        console.log("Response from server:", data);
+                        let resultText = '';
+                        if (data.error) {
+                            resultText = `<p>Error: ${data.error}</p>`;
+                        } else {
+                            resultText = `<p><strong>Area:</strong> ${data.area}</p>`;
+                        }
+                        $('#result-rectangle').html(resultText);
+                    },
+                    error: function (err) {
+                        console.error('Error:', err);
+                    }
+                });
+
+                console.log("Form data:", formData);
+            });
+
+            // Square Calculator
+
+            $('#form-square').off('submit').on('submit', function (e) {
+                e.preventDefault();
+                const formData = $(this).serialize();
+                console.log("Form data:", formData);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/calculate-square',
+                    data: formData,
+                    success: function (data) {
+                        console.log("Response from server:", data);
+                        let resultText = '';
+                        if (data.error) {
+                            resultText = `<p>Error: ${data.error}</p>`;
+                        } else {
+                            resultText = `<p><strong>Area:</strong> ${data.area}</p>`;
+                            resultText = `<p><strong>Area:</strong> ${data.area}</p>`;
+                        }
+                        $('#result-square').html(resultText);
+                    },
+                    error: function (err) {
+                        console.error('Error:', err);
+                    }
+                });
+
+                console.log("Form data:", formData);
+            });
+
+            // Sphere Calculator
+            $('#form-sphere').off('submit').on('submit', function (e) {
+                e.preventDefault();
+                const formData = $(this).serialize();
+                console.log("Form data:", formData);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/calculate-sphere',
+                    data: formData,
+                    success: function (data) {
+                        console.log("Response from server:", data);
+                        let resultText = '';
+                        if (data.error) {
+                            resultText = `<p>Error: ${data.error}</p>`;
+                        } else {
+                            resultText = `<p><strong>Volume:</strong> ${data.volume}</p>`;
+                        }
+                        $('#result-sphere').html(resultText);
+                    },
+                    error: function (err) {
+                        console.error('Error:', err);
+                    }
+                });
+
+                console.log("Form data:", formData);
+            });
+        }
+
+        // Handling form submissions for each calculator
+        handleFormSubmit('#form-2d-distance', '/calculate-2d-distance', '#result-2d-distance');
+        handleFormSubmit('#form-3d-distance', '/calculate-3d-distance', '#result-3d-distance');
+        handleFormSubmit('#form-equilateral', '/calculate-equilateral', '#result-equilateral');
+        handleFormSubmit('#form-isosceles', '/calculate-isosceles', '#result-isosceles');
+        handleFormSubmit('#form-right-angled', '/calculate-right-angled', '#result-right-angled');
+        handleFormSubmit('#form-cube', '/calculate-cube', '#result-cube');
+        handleFormSubmit('#form-cone', '/calculate-cone', '#result-cone');
+        handleFormSubmit('#form-circle', '/calculate-circle', '#result-circle');
+        handleFormSubmit('#form-cylinder', '/calculate-cylinder', '#result-cylinder');
+        handleFormSubmit('#form-rectangle', '/calculate-rectangle', '#result-rectangle');
+        handleFormSubmit('#form-square', '/calculate-square', '#result-square');
+        handleFormSubmit('#form-sphere', '/calculate-sphere', '#result-sphere');
+    </script>
+
+    <!-- add to save funtion with javascript and localstorage -->
+    <script>
+        // Function to toggle favorites
+        function toggleFavorite(id, name) {
+            let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const favoriteIndex = favorites.findIndex(item => item.id === id);
+
+            if (favoriteIndex === -1) {
+                // Add to favorites
+                favorites.push({ id, name });
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                alert(`${name} has been added to your favorites!`);
+            } else {
+                // Remove from favorites
+                favorites.splice(favoriteIndex, 1);
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                alert(`${name} removed from favorites!`);
+            }
+
+            updateFavoriteStyles(); // Update button styles
+            displayFavorites(); // Update the favorites list
+        }
+
+        // Function to update the styles of all favorite buttons
+        function updateFavoriteStyles() {
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+            // Iterate through all buttons with the class "favorite-button"
+            document.querySelectorAll('.favorite-button').forEach(button => {
+                const buttonId = button.id; // Get button ID
+                const isFavorite = favorites.some(item => item.id === buttonId);
+
+                // Change color based on favorite status
+                button.style.color = isFavorite ? "blue" : "black";
+            });
+        }
+
+        // Function to display favorites in a list
+        function displayFavorites() {
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const favoritesList = document.getElementById('favorites');
+            favoritesList.innerHTML = '';
+
+            favorites.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item.name;
+                favoritesList.appendChild(li);
+            });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            updateFavoriteStyles(); // Apply styles to buttons on page load
+            displayFavorites(); // Display the favorites list
+        });
+    </script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <br>
+    <p align="center">&copy; 2024 Geometry Calculators. All Rights Reserved.</p>
+</body>
+
+</html>

@@ -1,0 +1,107 @@
+/* Overlay for Modal Background */
+.overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark background */
+    z-index: 998; /* Behind the modal */
+}
+
+/* Calculator Modal Container */
+.calculator-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 999; /* On top of overlay */
+    width: 60%; /* Make the calculator smaller (60% of the page width) */
+    max-width: 400px; /* Limit the max width */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Display area */
+.display {
+    width: 100%;
+    padding: 8px;
+    font-size: 18px;  /* Reduced font size */
+    text-align: right;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Buttons container */
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;  /* Smaller gap between buttons */
+    width: 100%;
+}
+
+/* Style for each button */
+.button {
+    padding: 12px;
+    font-size: 14px;  /* Reduced font size for buttons */
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
+
+#save-btn, #print-btn, #share-btn {
+    background-color: #008CBA; /* Blue color for these buttons */
+}
+
+#save-btn:hover, #print-btn:hover, #share-btn:hover {
+    background-color: #007BB5; /* Darker blue on hover */
+}
+
+/* Smaller Equal Button */
+.equal-button {
+    padding: 10px;
+    font-size: 12px;  /* Smaller font size */
+    background-color: #FF9800; /* Orange color */
+    color: white;
+    width: 100%; /* Make the equal button take up full width */
+    grid-column: span 4; /* Span across all columns */
+}
+
+.equal-button:hover {
+    background-color: #FB8C00; /* Darker orange on hover */
+}
+
+/* Optional: Responsive Design for smaller screens */
+@media screen and (max-width: 600px) {
+    .calculator-container {
+        width: 80%;  /* Make the calculator container wider for smaller screens */
+        padding: 10px;
+    }
+
+    .display {
+        font-size: 16px;
+    }
+
+    .button {
+        padding: 10px;
+        font-size: 12px;  /* Even smaller font size on smaller screens */
+    }
+
+    .equal-button {
+        font-size: 10px; /* Even smaller font for the equal button */
+    }
+}

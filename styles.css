@@ -1,0 +1,21 @@
+.banner {
+  position: relative;
+}
+.carousel-caption {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+#calculatorList {
+  display: none; /* Hide the list initially */
+  position: absolute;
+  z-index: 1050;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow: hidden;
+}
+.calculator-item {
+  display: none; /* Hide items by default until searched */
+}
+

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One Page Website</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="bg-dark text-white sticky-top">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">
+          <img src="images/logo.png" alt="Logo" class="logo profile rounded" height="50px">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button"
+                data-bs-toggle="dropdown">Category</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/scientific">Scientific Calculator</a></li>
+                <li><a class="dropdown-item" href="/financial">Financial Calculators</a></li>
+                <li><a class="dropdown-item" href="/health">Health and Fitness Calculators</a></li>
+                <li><a class="dropdown-item" href="/conversion">Conversion Calculators</a></li>
+                <li><a class="dropdown-item" href="/algebra">Math and Algebra Calculators</a></li>
+                <li><a class="dropdown-item" href="/geometry">Geometry Calculators</a></li>
+              </ul>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+            <li class="dropdown-item" id="login-buttons"><a class="nav-link" href="#" data-bs-toggle="modal"
+                data-bs-target="#loginModal">Login</a></li>
+            <li class="dropdown-item" id="signup-buttons"><a class="nav-link" href="#" data-bs-toggle="modal"
+                data-bs-target="#signupModal">Signup</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal"
+                data-bs-target="#contactModal">Contact</a></li>
+          </ul>
+          <form class="me-3 position-relative">
+            <input type="text" id="searchBar" class="form-control" placeholder="Search for a calculator..."
+              onkeyup="searchCalculators()">
+            <ul id="calculatorList" class="dropdown-menu w-100 mt-1 overflow-hidden">
+              <!-- Calculator names dynamically filtered here with anchor tags -->
+              <li class="dropdown-item calculator-item"><a href="/scientific">Scientific Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Simple Interest Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Compound Interest Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Currency Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Salary Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Retirement Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Sales and Tax Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Investment Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/health">BMI Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/health">BMR Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/health">Calorie Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/health">Body Fat Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/health">Ideal Weight Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Length Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Age Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Hour to Minute & Seconds Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Date Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">GPA Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Height Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Password Generator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Bill and Tip Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">2D Distance Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">3D Distance Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Equilateral Triangle Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Isosceles Triangle Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Right-Angled Triangle Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Cube Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Cone Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Circle Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Cylinder Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Rectangle Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Square Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Sphere Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Complex Number Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Boolean Algebra Simplifier</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Partial Fraction Decomposer</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Inequality Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Flow Rate Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Impulse Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Factorization Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Percentage Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Exponential Formulas Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Cube of a Number Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Cube Root Calculator</a></li>
+            </ul>
+          </form>
+          <div class="flex-shrink-0 dropdown" id="profiles-div">
+            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="images/user.png" alt="mdo" width="32" height="32" class="rounded-circle border">
+            </a>
+            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+              <li class="dropdown-item d-none" id="username"></li>
+              <li class="dropdown-item d-none" id="logout-button"><a class="nav-link text-danger"
+                  href="/logout">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section id="home" class="banner">
+    <div class="carousel slide" id="bannerCarousel" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="images/bannerr-bg-1.jpg" class="d-block w-100" alt="Banner 1" width=100% height="500"
+            style="object-fit: cover;">
+          <div class="carousel-caption">
+            <h3>Welcome to Our Website</h3>
+            <p>All in one calculator</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="images/banner2.jpg" class="d-block w-100" alt="Banner 2" width=100% height="500">
+          <div class="carousel-caption">
+            <h3>All in one calculator</h3>
+            <p>Welcome to Our Website</p>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-5">
+    <div class="container d-flex">
+      <div class="col-md-9">
+        <h2>About Us</h2>
+        <p>Techplement is a Software Development and Services Company with a passion for innovation. We take pride in
+          crafting cutting-edge solutions that empower our clients to thrive in the digital age. Our team of experts
+          transforms ideas into reality, delivering quality software that simplifies complexities and drives success.
+          Techplement is a dynamic software solutions providers that specializes in delivering cutting edge services in
+          website development, Devops implementations, Software Development, AWS Cloud solutions and educational
+          development services</p>
+      </div>
+
+      <aside class="col-md-3 bg-light p-3">
+        <h4>Sidebar</h4>
+        <ul>
+          <li><a href="/scientific">Scientific Calculators</a></li>
+          <li><a href="/financial">Financial Calculators</a></li>
+          <li><a href="/health">Health and Fitness Calculators</a></li>
+          <li><a href="/conversion">Conversion Calculators</a></li>
+          <li><a href="/geometry">Geometry Calculators</a></li>
+          <li><a href="/algebra">Math and Algebra Calculators</a></li>
+        </ul>
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- Category Section -->
+  <section id="category" class="container py-5">
+    <!--<h2></h2>-->
+    <div class="row">
+      <div class="col-md-4"><img src="images/a.png" alt="Testimonial 1" height="100%" width="100%">
+        <p>Conversion Calculators</p>
+      </div>
+      <div class="col-md-4"><img src="images/b.png" alt="Testimonial 1" height="100%" width="100%">
+        <p>Geometry Calculators</p>
+      </div>
+      <div class="col-md-4"><img src="images/c.png" alt="Testimonial 1" height="100%" width="100%">
+        <p>Math and Algebra Calculators</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="testimonials" class="bg-light py-5">
+    <div class="container text-center">
+      <h2>Testimonials</h2>
+      <div class="row">
+        <div class="col-md-4"><img src="images/calculator1.png" alt="Testimonial 1" height="150" width="150">
+          <p>Client 1</p>
+        </div>
+        <div class="col-md-4"><img src="https://via.placeholder.com/150" alt="Testimonial 2">
+          <p>Client 2</p>
+        </div>
+        <div class="col-md-4"><img src="https://via.placeholder.com/150" alt="Testimonial 3">
+          <p>Client 3</p>
+        </div>
+        <div class="col-md-4"><img src="images/img_snow.jpg" alt="Testimonial 1" height="150" width="150">
+          <p>Client 4</p>
+        </div>
+        <div class="col-md-4"><img src="images/img_forest.jpg" alt="Testimonial 2" height="150" width="150">
+          <p>Client 5</p>
+        </div>
+        <div class="col-md-4"><img src="images/img_mountains.jpg" alt="Testimonial 3" height="150" width="150">
+          <p>Client 6</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-dark text-white py-4">
+    <div class="container text-center d-flex justify-content-between">
+      <div>© 2024 Your Website</div>
+      <div>
+        <a href="#" class="text-white mx-2">Facebook</a>
+        <a href="#" class="text-white mx-2">Twitter</a>
+        <a href="#" class="text-white mx-2">LinkedIn</a>
+      </div>
+      <form class="d-flex" action="/news-letter" method="POST">
+        <input type="email" placeholder="Newsletter" name="email" class="form-control me-2">
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      </form>
+    </div>
+  </footer>
+
+  <!-- Modals -->
+  <div class="modal fade" id="loginModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>Login</h5>
+        </div>
+        <form action="/login" method="POST">
+          <div class="modal-body">
+            <input type="text" id="loginUsername" placeholder="Username" name="username" class="form-control mb-3">
+            <input type="password" id="loginPassword" placeholder="Password" name="password" class="form-control">
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-primary" value="Login">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="signupModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>Signup</h5>
+        </div>
+        <form action="/register" method="POST">
+          <div class="modal-body">
+            <input type="text" name="username" id="signupUsername" placeholder="Username" class="form-control mb-3">
+            <input type="email" name="email" id="signupEmail" placeholder="Email" class="form-control mb-3">
+            <input type="number" name="mobile" id="signupmob" placeholder="Mobile" class="form-control mb-3">
+            <input type="password" name="password" id="signupPassword" placeholder="Password" class="form-control">
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-primary" type="submit">Signup</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="contactModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>Contact Us</h5>
+        </div>
+        <form action="/contact" method="POST">
+          <div class="modal-body">
+            <input type="text" id="contactName" placeholder="Name" class="form-control mb-3" name="name" required>
+            <input type="email" id="contactEmail" placeholder="Email" class="form-control mb-3" name="email" required>
+            <textarea id="contactMessage" placeholder="Message" class="form-control" name="message"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-primary" value="Submit">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal fade" id="calculatorModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Calculator</h5>
+        </div>
+        <div class="modal-body">
+          <div id="calculatorContent">
+            <!-- Calculator content dynamically loaded via JavaScript -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>

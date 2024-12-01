@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All in one Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- font awesome cdn file -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+    integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* General Body Styling */
+    body {
+      background-color: #f4f4f9;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      height: 100vh;
+    }
+
+    /* Header Styling */
+    header {
+      width: 100%;
+      background-color: #343a40;
+      padding: 10px 0;
+      color: white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar {
+      margin-bottom: 0;
+    }
+
+    /* Calculator Container */
+    .calculator-container {
+      width: 100%;
+      max-width: 350px;
+      /* Adjusted size of the calculator */
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+      /* Space between header and calculator */
+    }
+
+    /* Display Area */
+    #display {
+      width: 100%;
+      margin-bottom: 20px;
+      font-size: 32px;
+      /* Adjusted font size */
+      padding: 15px;
+      text-align: right;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+      color: #333;
+      font-weight: bold;
+    }
+
+    /* Buttons Grid Layout */
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      /* 4 buttons per row */
+      gap: 10px;
+    }
+
+    /* Button Styling */
+    button {
+      padding: 5px 2.5px;
+      /* Smaller padding */
+      font-size: 15px;
+      /* Smaller font size */
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:focus {
+      outline: none;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Equal Button */
+    .equal-button {
+      grid-column: span 3;
+      /* Make equal button span the full row */
+      background-color: #28a745;
+      font-size: 24px;
+    }
+
+    .star-button {
+      grid-column: 1;
+      /* Make equal button span the full row */
+      background-color: #28a745;
+      font-size: 24px;
+    }
+
+    /* Button Layout Tweaks */
+    button:active {
+      background-color: #004085;
+    }
+
+    /* Adjusting for smaller screens */
+    @media (max-width: 768px) {
+      .calculator-container {
+        width: 90%;
+        /* Ensure it fits on smaller screens */
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="bg-dark text-white sticky-top">
+    <div class="container p-0- m-0">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">
+          <img src="images/logo.png" alt="Logo" class="logo profile rounded" height="50px">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button"
+                data-bs-toggle="dropdown">Category</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/scientific">Scientific Calculator</a></li>
+                <li><a class="dropdown-item" href="/financial">Financial Calculators</a></li>
+                <li><a class="dropdown-item" href="/health">Health and Fitness Calculators</a></li>
+                <li><a class="dropdown-item" href="/conversion">Conversion Calculators</a></li>
+                <li><a class="dropdown-item" href="/algebra">Math and Algebra Calculators</a></li>
+                <li><a class="dropdown-item" href="/geometry">Geometry Calculators</a></li>
+              </ul>
+            </li>
+            <li class="dropdown-item" id="login-buttons"><a class="nav-link" href="#" data-bs-toggle="modal"
+                data-bs-target="#loginModal">Login</a></li>
+            <li class="dropdown-item" id="signup-buttons"><a class="nav-link" href="#" data-bs-toggle="modal"
+                data-bs-target="#signupModal">Signup</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal"
+                data-bs-target="#contactModal">Contact</a></li>
+          </ul>
+          <form class="me-3 position-relative">
+            <input type="text" id="searchBar" class="form-control" placeholder="Search for a calculator..."
+              onkeyup="searchCalculators()">
+            <ul id="calculatorList" class="dropdown-menu w-100 mt-1 overflow-hidden">
+              <!-- Calculator names dynamically filtered here with anchor tags -->
+              <li class="dropdown-item calculator-item"><a href="/scientific">Scientific Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Simple Interest
+                  Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Compound Interest
+                  Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Currency Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Salary Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Retirement Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Sales and Tax Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Investment Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/health">BMI Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/health">BMR Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/health">Calorie Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/health">Body Fat Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/health">Ideal Weight Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Length Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Age Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Hour to Minute & Seconds
+                  Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Date Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">GPA Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Height Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Password Generator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Bill and Tip Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">2D Distance Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">3D Distance Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Equilateral Triangle
+                  Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Isosceles Triangle
+                  Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Right-Angled Triangle
+                  Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Cube Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Cone Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Circle Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Cylinder Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Rectangle Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Square Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Sphere Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Complex Number Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Boolean Algebra Simplifier</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Partial Fraction Decomposer</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Inequality Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Flow Rate Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Impulse Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Factorization Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Percentage Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Exponential Formulas
+                  Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Cube of a Number Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Cube Root Calculator</a></li>
+            </ul>
+          </form>
+          <div class="flex-shrink-0 dropdown" id="profiles-div">
+            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="images/user.png" alt="mdo" width="32" height="32" class="rounded-circle border">
+            </a>
+            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+              <li class="dropdown-item d-none" id="username"></li>
+              <li class="dropdown-item d-none" id="logout-button"><a class="nav-link text-danger"
+                  href="/logout">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <div class="calculator-container">
+    <input type="text" id="display" class="display" disabled>
+
+
+    <div class="buttons">
+      <button class="button" value="7">7</button>
+      <button class="button" value="8">8</button>
+      <button class="button" value="9">9</button>
+      <button class="button" value="/">/</button>
+
+      <button class="button" value="4">4</button>
+      <button class="button" value="5">5</button>
+      <button class="button" value="6">6</button>
+      <button class="button" value="*">*</button>
+
+      <button class="button" value="1">1</button>
+      <button class="button" value="2">2</button>
+      <button class="button" value="3">3</button>
+      <button class="button" value="-">-</button>
+
+      <button class="button" value="0">0</button>
+      <button class="button" value=".">.</button>
+      <button class="button" value="C">C</button>
+      <button class="button" value="+">+</button>
+
+      <button class="button" value="sin">sin</button>
+      <button class="button" value="cos">cos</button>
+      <button class="button" value="tan">tan</button>
+      <button class="button" value="sqrt">√</button>
+
+      <button class="button" value="^">^</button>
+      <button class="button" value="pi">π</button>
+      <button class="button" value="e">e</button>
+      <button class="button" value="log">log</button>
+      <button class="button" value="∛">∛</button>
+
+      <!-- New buttons for Save, Print, Share -->
+      <button class="button" id="save-btn">Save</button>
+      <button class="button" id="print-btn">Print</button>
+      <button class="button" id="share-btn">Share</button>
+
+      <button class="star-button  favorite-button" value="=" id="scientific-clc"
+        onclick="toggleFavorite('scientific-clc', 'Scientific Calculator Add to Your Favroit')">
+        <i class="fa-solid fa-star" title="Add to Favorite"></i>
+      </button>
+
+      <!-- Smaller Equal Button -->
+      <button class="button equal-button" value="=">=</button>
+
+    </div>
+  </div>
+
+
+
+
+  <!-- Modals -->
+  <div class="modal fade" id="loginModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>Login</h5>
+        </div>
+        <form action="/login" method="POST">
+          <div class="modal-body">
+            <input type="text" id="loginUsername" placeholder="Username" name="username" class="form-control mb-3">
+            <input type="password" id="loginPassword" placeholder="Password" name="password" class="form-control">
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-primary" value="Login">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="signupModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>Signup</h5>
+        </div>
+        <form action="/register" method="POST">
+          <div class="modal-body">
+            <input type="text" name="username" id="signupUsername" placeholder="Username" class="form-control mb-3">
+            <input type="email" name="email" id="signupEmail" placeholder="Email" class="form-control mb-3">
+            <input type="number" name="mobile" id="signupmob" placeholder="Mobile" class="form-control mb-3">
+            <input type="password" name="password" id="signupPassword" placeholder="Password" class="form-control">
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-primary" type="submit">Signup</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="contactModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>Contact Us</h5>
+        </div>
+        <form action="/contact" method="POST">
+          <div class="modal-body">
+            <input type="text" id="contactName" placeholder="Name" class="form-control mb-3" name="name" required>
+            <input type="email" id="contactEmail" placeholder="Email" class="form-control mb-3" name="email" required>
+            <textarea id="contactMessage" placeholder="Message" class="form-control" name="message"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-primary" value="Submit">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal fade" id="calculatorModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Calculator</h5>
+        </div>
+        <div class="modal-body">
+          <div id="calculatorContent">
+            <!-- Calculator content dynamically loaded via JavaScript -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <p id="result" style="display:disabled" ;></p>
+
+  <script src="/js/scientific-script.js"></script>
+
+  <!-- add to save funtion with javascript and localstorage -->
+  <script>
+    // Function to toggle favorites
+    function toggleFavorite(id, name) {
+      let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      const favoriteIndex = favorites.findIndex(item => item.id === id);
+
+      if (favoriteIndex === -1) {
+        // Add to favorites
+        favorites.push({ id, name });
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        alert(`${name} has been added to your favorites!`);
+      } else {
+        // Remove from favorites
+        favorites.splice(favoriteIndex, 1);
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        alert(`${name} removed from favorites!`);
+      }
+
+      updateFavoriteStyles(); // Update button styles
+      displayFavorites(); // Update the favorites list
+    }
+
+    // Function to update the styles of all favorite buttons
+    function updateFavoriteStyles() {
+      const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+      // Iterate through all buttons with the class "favorite-button"
+      document.querySelectorAll('.favorite-button').forEach(button => {
+        const buttonId = button.id; // Get button ID
+        const isFavorite = favorites.some(item => item.id === buttonId);
+
+        // Change color based on favorite status
+        button.style.backgroundColor = isFavorite ? "blue" : "green";
+      });
+    }
+
+    // Function to display favorites in a list
+    function displayFavorites() {
+      const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      const favoritesList = document.getElementById('favorites');
+      favoritesList.innerHTML = '';
+
+      favorites.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item.name;
+        favoritesList.appendChild(li);
+      });
+    }
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', () => {
+      updateFavoriteStyles(); // Apply styles to buttons on page load
+      displayFavorites(); // Display the favorites list
+    });
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+  <p align="center">&copy; 2024 Scientific Calculators. All Rights Reserved.</p>
+</body>
+
+</html>

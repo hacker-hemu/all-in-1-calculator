@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All in one Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- font awesome cdn file -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+    integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      font-weight: bold;
+      color: #17304f;
+    }
+
+    .accordion-button {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .accordion-button:not(.collapsed) {
+      background-color: #0056b3;
+    }
+
+    #lengthResult,
+    #ageResult,
+    #timeResult,
+    #dateDuration,
+    #gpaResult {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #007bff;
+    }
+  </style>
+
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="bg-dark text-white sticky-top">
+    <div class="container p-0- m-0">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">
+          <img src="images/logo.png" alt="Logo" class="logo profile rounded" height="50px">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button"
+                data-bs-toggle="dropdown">Category</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/scientific">Scientific Calculator</a></li>
+                <li><a class="dropdown-item" href="/financial">Financial Calculators</a></li>
+                <li><a class="dropdown-item" href="/health">Health and Fitness Calculators</a></li>
+                <li><a class="dropdown-item" href="/conversion">Conversion Calculators</a></li>
+                <li><a class="dropdown-item" href="/algebra">Math and Algebra Calculators</a></li>
+                <li><a class="dropdown-item" href="/geometry">Geometry Calculators</a></li>
+              </ul>
+            </li>
+            <li class="dropdown-item" id="login-buttons"><a class="nav-link" href="#" data-bs-toggle="modal"
+                data-bs-target="#loginModal">Login</a></li>
+            <li class="dropdown-item" id="signup-buttons"><a class="nav-link" href="#" data-bs-toggle="modal"
+                data-bs-target="#signupModal">Signup</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal"
+                data-bs-target="#contactModal">Contact</a></li>
+          </ul>
+          <form class="me-3 position-relative">
+            <input type="text" id="searchBar" class="form-control" placeholder="Search for a calculator..."
+              onkeyup="searchCalculators()">
+            <ul id="calculatorList" class="dropdown-menu w-100 mt-1 overflow-hidden">
+              <!-- Calculator names dynamically filtered here with anchor tags -->
+              <li class="dropdown-item calculator-item"><a href="/scientific">Scientific Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Simple Interest
+                  Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Compound Interest
+                  Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Currency Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Salary Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Retirement Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Sales and Tax Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/financial">Investment Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/health">BMI Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/health">BMR Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/health">Calorie Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/health">Body Fat Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/health">Ideal Weight Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Length Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Age Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Hour to Minute & Seconds
+                  Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Date Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">GPA Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Height Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Password Generator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/conversion">Bill and Tip Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">2D Distance Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">3D Distance Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Equilateral Triangle
+                  Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Isosceles Triangle
+                  Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Right-Angled Triangle
+                  Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Cube Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Cone Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Circle Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Cylinder Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Rectangle Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Square Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/geometry">Sphere Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Complex Number Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Boolean Algebra Simplifier</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Partial Fraction Decomposer</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Inequality Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Flow Rate Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Impulse Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Factorization Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Percentage Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Exponential Formulas
+                  Calculator</a></li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Cube of a Number Calculator</a>
+              </li>
+              <li class="dropdown-item calculator-item"><a href="/algebra">Cube Root Calculator</a></li>
+            </ul>
+          </form>
+          <div class="flex-shrink-0 dropdown" id="profiles-div">
+            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="images/user.png" alt="mdo" width="32" height="32" class="rounded-circle border">
+            </a>
+            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+              <li class="dropdown-item d-none" id="username"></li>
+              <li class="dropdown-item d-none" id="logout-button"><a class="nav-link text-danger"
+                  href="/logout">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+
+
+  <!-- Calculators Section -->
+  <div class="container py-4">
+    <h1 class="text-center mb-4">All Conversion Calculators</h1>
+
+    <!-- Accordion for different calculators -->
+    <div class="accordion" id="calculatorAccordion">
+
+      <!-- Length Calculator -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingLength">
+          <button class="accordion-button text-light" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseLength">
+            Length Calculator
+          </button>
+        </h2>
+        <div id="collapseLength" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            <form id="lengthForm">
+              <div class="mb-3">
+                <label for="lengthValue" class="form-label">Length</label>
+                <input type="number" class="form-control" id="lengthValue" placeholder="Enter length">
+              </div>
+              <div class="mb-3">
+                <label for="lengthUnit" class="form-label">From Unit</label>
+                <select class="form-select" id="lengthUnit">
+                  <option value="meters">Meters</option>
+                  <option value="kilometers">Kilometers</option>
+                  <option value="feet">Feet</option>
+                  <option value="centimeter">Centimeter</option>
+                  <option value="millimeter">Millimeter</option>
+                  <option value="inches">Inch</option>
+                  <option value="yards">Yard</option>
+                  <option value="miles">Mile</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="targetLengthUnit" class="form-label">To Unit</label>
+                <select class="form-select" id="targetLengthUnit">
+                  <option value="meters">Meters</option>
+                  <option value="kilometers">Kilometers</option>
+                  <option value="feet">Feet</option>
+                  <option value="centimeter">Centimeter</option>
+                  <option value="millimeter">Millimeter</option>
+                  <option value="inches">Inch</option>
+                  <option value="yards">Yard</option>
+                  <option value="miles">Mile</option>
+                </select>
+                </select>
+              </div>
+
+              <!-- <button type="button" class="btn btn-primary" onclick="convertLength()">Convert</button> -->
+
+              <div
+                class="row mt-2 d-flex align-items-center justify-content-center mt-4 justify-content-center mt-4 mt-4">
+                <button type="button" class="btn btn-primary col-2  p-3 mx-2" onclick="convertLength()">Convert</button>
+
+                <!-- <button class="col-3" > -->
+                <i class="fa-solid fa-floppy-disk col-2 btn btn-primary p-3 mx-2" title="Save"></i>
+                <i class="fa-solid fa-star col-2 favorite-button col-2 btn btn-primary p-3 mx-2" title="Add to Favorite"
+                  id="lengh-clc" onclick="toggleFavorite('lengh-clc', 'Lengh Convert Calculator')"></i>
+
+                <i class="fa-solid fa-print col-2 col-2 btn btn-primary p-3 mx-2" title="Print" id="print-btn"></i>
+                <i class="fa-solid fa-share col-2 col-2 btn btn-primary p-3 mx-2" title="Share" id="share-btn"></i>
+              </div>
+
+            </form>
+            <div id="lengthResult" class="mt-3"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Age Calculator -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingAge">
+          <button class="accordion-button text-light" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseAge">
+            Age Calculator
+          </button>
+        </h2>
+        <div id="collapseAge" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            <form id="ageForm">
+              <div class="mb-3">
+                <label for="birthDate" class="form-label">Birth Date</label>
+                <input type="date" class="form-control" id="birthDate">
+              </div>
+              <!-- <button type="button" class="btn btn-primary" onclick="calculateAge()">Calculate Age</button> -->
+
+              <div
+                class="row mt-2 d-flex align-items-center justify-content-center mt-4 justify-content-center mt-4 mt-4">
+                <button type="button" class="btn btn-primary col-2  p-3 mx-2" onclick="calculateAge()">Calculate
+                  Age</button>
+
+
+                <!-- <button class="col-3" > -->
+                <i class="fa-solid fa-floppy-disk col-2 btn btn-primary p-3 mx-2" title="Save"></i>
+                <i class="fa-solid fa-star col-2 favorite-button col-2 btn btn-primary p-3 mx-2" title="Add to Favorite"
+                  id="age-clc" onclick="toggleFavorite('age-clc', 'Age Calculator')"></i>
+
+                <i class="fa-solid fa-print col-2 col-2 btn btn-primary p-3 mx-2" title="Print" id="print-btn"></i>
+                <i class="fa-solid fa-share col-2 col-2 btn btn-primary p-3 mx-2" title="Share" id="share-btn"></i>
+              </div>
+            </form>
+            <div id="ageResult" class="mt-3"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hour to Minute & Seconds Calculator -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTime">
+          <button class="accordion-button  text-light" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseTime">
+            Hour to Minute & Seconds Calculator
+          </button>
+        </h2>
+        <div id="collapseTime" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            <form id="timeForm">
+              <div class="mb-3">
+                <label for="hoursInput" class="form-label">Enter Hours</label>
+                <input type="number" class="form-control" id="hoursInput" placeholder="Enter hours">
+              </div>
+              <!-- <button type="button" class="btn btn-primary" onclick="convertHours()">Convert</button> -->
+
+              <div
+                class="row mt-2 d-flex align-items-center justify-content-center mt-4 justify-content-center mt-4 mt-4">
+                <button type="button" class="btn btn-primary col-2  p-3 mx-2" onclick="convertHours()">Convert</button>
+
+
+                <!-- <button class="col-3" > -->
+                <i class="fa-solid fa-floppy-disk col-2 btn btn-primary p-3 mx-2" title="Save"></i>
+                <i class="fa-solid fa-star col-2 favorite-button col-2 btn btn-primary p-3 mx-2" title="Add to Favorite"
+                  id="htms-clc" onclick="toggleFavorite('htms-clc', 'Hour to Minute & Seconds Calculator')"></i>
+
+                <i class="fa-solid fa-print col-2 col-2 btn btn-primary p-3 mx-2" title="Print" id="print-btn"></i>
+                <i class="fa-solid fa-share col-2 col-2 btn btn-primary p-3 mx-2" title="Share" id="share-btn"></i>
+              </div>
+            </form>
+            <div id="timeResult" class="mt-3"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Date Calculator -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingDate">
+          <button class="accordion-button text-light" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseDate">
+            Date Calculator
+          </button>
+        </h2>
+        <div id="collapseDate" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            <form id="dateForm">
+              <div class="mb-3">
+                <label for="startDate" class="form-label">Start Date</label>
+                <input type="date" class="form-control" id="startDate">
+              </div>
+              <div class="mb-3">
+                <label for="endDate" class="form-label">End Date</label>
+                <input type="date" class="form-control" id="endDate">
+              </div>
+              <!-- <button type="button" class="btn btn-primary" onclick="calculateDateDuration()">Calculate
+                Duration</button> -->
+
+              <div
+                class="row mt-2 d-flex align-items-center justify-content-center mt-4 justify-content-center mt-4 mt-4">
+                <button type="button" class="btn btn-primary col-2  p-3 mx-2"
+                  onclick="calculateDateDuration()">Calculate
+                  Duration</button>
+
+
+                <!-- <button class="col-3" > -->
+                <i class="fa-solid fa-floppy-disk col-2 btn btn-primary p-3 mx-2" title="Save"></i>
+                <i class="fa-solid fa-star col-2 favorite-button col-2 btn btn-primary p-3 mx-2" title="Add to Favorite"
+                  id="data-clc" onclick="toggleFavorite('data-clc', 'Date Calculator')"></i>
+
+                <i class="fa-solid fa-print col-2 col-2 btn btn-primary p-3 mx-2" title="Print" id="print-btn"></i>
+                <i class="fa-solid fa-share col-2 col-2 btn btn-primary p-3 mx-2" title="Share" id="share-btn"></i>
+              </div>
+            </form>
+            <div id="dateDuration" class="mt-3"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GPA Calculator -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingGPA">
+          <button class="accordion-button text-light" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseGPA">
+            GPA Calculator
+          </button>
+        </h2>
+        <div id="collapseGPA" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            <form id="gpaForm">
+              <div class="mb-3">
+                <label for="courses" class="form-label">Course Names (comma separated)</label>
+                <input type="text" class="form-control" id="courses" placeholder="Enter course names">
+              </div>
+              <div class="mb-3">
+                <label for="credits" class="form-label">Course Credits (comma separated)</label>
+                <input type="text" class="form-control" id="credits" placeholder="Enter course credits">
+              </div>
+              <div class="mb-3">
+                <label for="grades" class="form-label">Grades (comma separated)</label>
+                <input type="text" class="form-control" id="grades" placeholder="Enter course grades">
+              </div>
+              <!-- <button type="button" class="btn btn-primary" onclick="calculateGPA()">Calculate GPA</button> -->
+
+              <div
+                class="row mt-2 d-flex align-items-center justify-content-center mt-4 justify-content-center mt-4 mt-4">
+                <button type="button" class="btn btn-primary col-2  p-3 mx-2" onclick="calculateGPA()">Calculate
+                  GPA</button>
+
+                <!-- <button class="col-3" > -->
+                <i class="fa-solid fa-floppy-disk col-2 btn btn-primary p-3 mx-2" title="Save"></i>
+                <i class="fa-solid fa-star col-2 favorite-button col-2 btn btn-primary p-3 mx-2" title="Add to Favorite"
+                  id="gpa-clc" onclick="toggleFavorite('gpa-clc', 'GPA Calculator')"></i>
+
+                <i class="fa-solid fa-print col-2 col-2 btn btn-primary p-3 mx-2" title="Print" id="print-btn"></i>
+                <i class="fa-solid fa-share col-2 col-2 btn btn-primary p-3 mx-2" title="Share" id="share-btn"></i>
+              </div>
+            </form>
+            <div id="gpaResult" class="mt-3"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- password Generator -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingPassword">
+          <button class="accordion-button text-light" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapsePassword">
+            Password Generator
+          </button>
+        </h2>
+        <div id="collapsePassword" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            <form id="passwordForm">
+              <div class="mb-3">
+                <label for="passwordLength" class="form-label">Password Length</label>
+                <input type="number" class="form-control" id="passwordLength" placeholder="Enter length">
+              </div>
+              <!-- <button type="button" class="btn btn-primary" onclick="generatePassword()">Generate Password</button> -->
+
+              <div
+                class="row mt-2 d-flex align-items-center justify-content-center mt-4 justify-content-center mt-4 mt-4">
+                <button type="button" class="btn btn-primary col-2  p-3 mx-2" onclick="generatePassword()">Generate
+                  Password</button>
+
+                <!-- <button class="col-3" > -->
+                <i class="fa-solid fa-floppy-disk col-2 btn btn-primary p-3 mx-2" title="Save"></i>
+                <i class="fa-solid fa-star col-2 favorite-button col-2 btn btn-primary p-3 mx-2" title="Add to Favorite"
+                  id="pass-clc" onclick="toggleFavorite('pass-clc', 'Password Generator')"></i>
+
+                <i class="fa-solid fa-print col-2 col-2 btn btn-primary p-3 mx-2" title="Print" id="print-btn"></i>
+                <i class="fa-solid fa-share col-2 col-2 btn btn-primary p-3 mx-2" title="Share" id="share-btn"></i>
+              </div>
+
+            </form>
+            <div id="passwordOutput" class="mt-3"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bill and Tip Calculator -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingBill">
+          <button class="accordion-button text-light" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseBill">
+            Bill and Tip Calculator
+          </button>
+        </h2>
+        <div id="collapseBill" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            <form id="billForm">
+              <div class="mb-3">
+                <label for="billAmount" class="form-label">Bill Amount</label>
+                <input type="number" class="form-control" id="billAmount" placeholder="Enter bill amount">
+              </div>
+              <div class="mb-3">
+                <label for="tipPercentage" class="form-label">Tip Percentage</label>
+                <input type="number" class="form-control" id="tipPercentage" placeholder="Enter tip percentage">
+              </div>
+              <!-- <button type="button" class="btn btn-primary" onclick="calculateBill()">Calculate Total</button> -->
+
+              <div
+              class="row mt-2 d-flex align-items-center justify-content-center mt-4 justify-content-center mt-4 mt-4">
+              <button type="button" class="btn btn-primary col-2  p-3 mx-2" onclick="calculateBill()">Calculate Total</button>
+
+              <!-- <button class="col-3" > -->
+              <i class="fa-solid fa-floppy-disk col-2 btn btn-primary p-3 mx-2" title="Save"></i>
+              <i class="fa-solid fa-star col-2 favorite-button col-2 btn btn-primary p-3 mx-2" title="Add to Favorite"
+                id="billt-clc" onclick="toggleFavorite('billt-clc', 'Bill and Tip Calculator')"></i>
+
+              <i class="fa-solid fa-print col-2 col-2 btn btn-primary p-3 mx-2" title="Print" id="print-btn"></i>
+              <i class="fa-solid fa-share col-2 col-2 btn btn-primary p-3 mx-2" title="Share" id="share-btn"></i>
+            </div>
+            </form>
+            <div id="billOutput" class="mt-3"></div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- Modals -->
+      <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5>Login</h5>
+            </div>
+            <form action="/login" method="POST">
+              <div class="modal-body">
+                <input type="text" id="loginUsername" placeholder="Username" name="username" class="form-control mb-3">
+                <input type="password" id="loginPassword" placeholder="Password" name="password" class="form-control">
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <input type="submit" class="btn btn-primary" value="Login">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="signupModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5>Signup</h5>
+            </div>
+            <form action="/register" method="POST">
+              <div class="modal-body">
+                <input type="text" name="username" id="signupUsername" placeholder="Username" class="form-control mb-3">
+                <input type="email" name="email" id="signupEmail" placeholder="Email" class="form-control mb-3">
+                <input type="number" name="mobile" id="signupmob" placeholder="Mobile" class="form-control mb-3">
+                <input type="password" name="password" id="signupPassword" placeholder="Password" class="form-control">
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-primary" type="submit">Signup</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="contactModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5>Contact Us</h5>
+            </div>
+            <form action="/contact" method="POST">
+              <div class="modal-body">
+                <input type="text" id="contactName" placeholder="Name" class="form-control mb-3" name="name" required>
+                <input type="email" id="contactEmail" placeholder="Email" class="form-control mb-3" name="email"
+                  required>
+                <textarea id="contactMessage" placeholder="Message" class="form-control" name="message"></textarea>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <input type="submit" class="btn btn-primary" value="Submit">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modals -->
+      <div class="modal fade" id="calculatorModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Calculator</h5>
+            </div>
+            <div class="modal-body">
+              <div id="calculatorContent">
+                <!-- Calculator content dynamically loaded via JavaScript -->
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <script>
+        // Length Conversion Logic
+        function convertLength() {
+          const lengthValue = parseFloat(document.getElementById('lengthValue').value);
+          const lengthUnit = document.getElementById('lengthUnit').value;
+          const targetUnit = document.getElementById('targetLengthUnit').value;
+
+          const conversionRates = {
+            meters: {
+              meters: 1,
+              kilometers: 0.001,
+              feet: 3.28084,
+              centimeters: 100,
+              millimeters: 1000,
+              inches: 39.3701,
+              yards: 1.09361,
+              miles: 0.000621371,
+            },
+            kilometers: {
+              meters: 1000,
+              kilometers: 1,
+              feet: 3280.84,
+              centimeters: 100000,
+              millimeters: 1000000,
+              inches: 39370.1,
+              yards: 1093.61,
+              miles: 0.621371,
+            },
+            feet: {
+              meters: 0.3048,
+              kilometers: 0.0003048,
+              feet: 1,
+              centimeters: 30.48,
+              millimeters: 304.8,
+              inches: 12,
+              yards: 0.333333,
+              miles: 0.000189394,
+            },
+            centimeters: {
+              meters: 0.01,
+              kilometers: 0.00001,
+              feet: 0.0328084,
+              centimeters: 1,
+              millimeters: 10,
+              inches: 0.393701,
+              yards: 0.0109361,
+              miles: 6.2137e-6,
+            },
+            millimeters: {
+              meters: 0.001,
+              kilometers: 0.000001,
+              feet: 0.00328084,
+              centimeters: 0.1,
+              millimeters: 1,
+              inches: 0.0393701,
+              yards: 0.00109361,
+              miles: 6.2137e-7,
+            },
+            inches: {
+              meters: 0.0254,
+              kilometers: 0.0000254,
+              feet: 0.0833333,
+              centimeters: 2.54,
+              millimeters: 25.4,
+              inches: 1,
+              yards: 0.0277778,
+              miles: 1.5783e-5,
+            },
+            yards: {
+              meters: 0.9144,
+              kilometers: 0.0009144,
+              feet: 3,
+              centimeters: 91.44,
+              millimeters: 914.4,
+              inches: 36,
+              yards: 1,
+              miles: 0.000568182,
+            },
+            miles: {
+              meters: 1609.34,
+              kilometers: 1.60934,
+              feet: 5280,
+              centimeters: 160934,
+              millimeters: 1609340,
+              inches: 63360,
+              yards: 1760,
+              miles: 1,
+            },
+          };
+
+
+          const result = lengthValue * conversionRates[lengthUnit][targetUnit];
+          document.getElementById('lengthResult').textContent = `${lengthValue} ${lengthUnit} = ${result.toFixed(2)} ${targetUnit}`;
+        }
+
+        // Age Calculator Logic
+        function calculateAge() {
+          const birthDate = new Date(document.getElementById('birthDate').value);
+          const currentDate = new Date();
+          const age = currentDate.getFullYear() - birthDate.getFullYear();
+          const beforeBirthday =
+            currentDate.getMonth() < birthDate.getMonth() ||
+            (currentDate.getMonth() === birthDate.getMonth() && currentDate.getDate() < birthDate.getDate());
+
+          document.getElementById('ageResult').textContent = beforeBirthday ? age - 1 : age;
+        }
+
+        // Hour to Minute & Seconds Logic
+        function convertHours() {
+          const hours = parseFloat(document.getElementById('hoursInput').value);
+          const minutes = hours * 60;
+          const seconds = minutes * 60;
+          document.getElementById('timeResult').textContent = `${hours} hours = ${minutes} minutes = ${seconds} seconds`;
+        }
+
+        // Date Duration Logic
+        function calculateDateDuration() {
+          const startDate = new Date(document.getElementById('startDate').value);
+          const endDate = new Date(document.getElementById('endDate').value);
+          const timeDifference = endDate - startDate;
+          const days = Math.floor(timeDifference / (1000 * 3600 * 24));
+          document.getElementById('dateDuration').textContent = `Duration: ${days} days`;
+        }
+
+        // GPA Calculator Logic
+        function calculateGPA() {
+          const courses = document.getElementById('courses').value.split(',');
+          const credits = document.getElementById('credits').value.split(',');
+          const grades = document.getElementById('grades').value.split(',');
+
+          let totalCredits = 0;
+          let weightedGrades = 0;
+
+          for (let i = 0; i < courses.length; i++) {
+            const credit = parseFloat(credits[i]);
+            const grade = parseFloat(grades[i]);
+            totalCredits += credit;
+            weightedGrades += credit * grade;
+          }
+
+          const gpa = weightedGrades / totalCredits;
+          document.getElementById('gpaResult').textContent = `Your GPA is: ${gpa.toFixed(2)}`;
+        }
+
+        //Password generator logic 
+        function generatePassword() {
+          const length = document.getElementById("passwordLength").value;
+
+          // Define the character sets for each category
+          const lowerCase = "abcdefghijklmnopqrstuvwxyz";
+          const upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+          const numbers = "0123456789";
+          const specialChars = "!@#$%^&*()_+[]{}|;:,.<>?";
+
+          // Combine all characters into one string
+          const allChars = lowerCase + upperCase + numbers + specialChars;
+
+          // Ensure that the password contains at least one character from each category
+          let password = "";
+
+          password += lowerCase.charAt(Math.floor(Math.random() * lowerCase.length));
+          password += upperCase.charAt(Math.floor(Math.random() * upperCase.length));
+          password += numbers.charAt(Math.floor(Math.random() * numbers.length));
+          password += specialChars.charAt(Math.floor(Math.random() * specialChars.length));
+
+          // Add remaining characters randomly from all categories
+          for (let i = password.length; i < length; i++) {
+            password += allChars.charAt(Math.floor(Math.random() * allChars.length));
+          }
+
+          // Shuffle the password to randomize the position of the required characters
+          password = password.split('').sort(() => 0.5 - Math.random()).join('');
+
+          document.getElementById("passwordOutput").textContent = "Generated Password: " + password;
+        }
+
+        // Bill and tips logic 
+        function calculateBill() {
+          const billAmount = parseFloat(document.getElementById("billAmount").value);
+          const tipPercentage = parseFloat(document.getElementById("tipPercentage").value);
+
+          if (isNaN(billAmount) || isNaN(tipPercentage)) {
+            document.getElementById("billOutput").textContent = "Please enter valid values.";
+            return;
+          }
+
+          const tipAmount = (billAmount * tipPercentage) / 100;
+          const totalAmount = billAmount + tipAmount;
+
+          document.getElementById("billOutput").textContent = `Tip: $${tipAmount.toFixed(2)}\nTotal: $${totalAmount.toFixed(2)}`;
+        }
+
+
+      </script>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="script.js"></script>
+
+      <!-- add to save funtion with javascript and localstorage -->
+      <script>
+        // Function to toggle favorites
+        function toggleFavorite(id, name) {
+          let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+          const favoriteIndex = favorites.findIndex(item => item.id === id);
+
+          if (favoriteIndex === -1) {
+            // Add to favorites
+            favorites.push({ id, name });
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            alert(`${name} has been added to your favorites!`);
+          } else {
+            // Remove from favorites
+            favorites.splice(favoriteIndex, 1);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            alert(`${name} removed from favorites!`);
+          }
+
+          updateFavoriteStyles(); // Update button styles
+          displayFavorites(); // Update the favorites list
+        }
+
+        // Function to update the styles of all favorite buttons
+        function updateFavoriteStyles() {
+          const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+          // Iterate through all buttons with the class "favorite-button"
+          document.querySelectorAll('.favorite-button').forEach(button => {
+            const buttonId = button.id; // Get button ID
+            const isFavorite = favorites.some(item => item.id === buttonId);
+
+            // Change color based on favorite status
+            button.style.backgroundColor = isFavorite ? "green" : "";
+          });
+        }
+
+        // Function to display favorites in a list
+        function displayFavorites() {
+          const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+          const favoritesList = document.getElementById('favorites');
+          favoritesList.innerHTML = '';
+
+          favorites.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item.name;
+            favoritesList.appendChild(li);
+          });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+          updateFavoriteStyles(); // Apply styles to buttons on page load
+          displayFavorites(); // Display the favorites list
+        });
+      </script>
+
+      <br>
+
+      <p align="center">&copy; 2024 Financial Calculators. All Rights Reserved.</p>
+</body>
+
+</html>

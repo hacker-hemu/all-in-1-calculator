@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All in one Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Basic styling */
+        /* body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        } 
+            
+            */
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Tab Navigation */
+        .calculator-tab {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .tab-link {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .tab-link:hover {
+            background-color: #45a049;
+        }
+
+        .calculator-content {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Input and buttons */
+        .calculator input,
+        .calculator button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 200px;
+            display: block;
+        }
+
+        .calculator button {
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .calculator button:hover {
+            background-color: #007B9E;
+        }
+
+        @media (max-width: 768px) {
+            .tab-link {
+                font-size: 14px;
+            }
+
+            input,
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body class="">
+
+    <!-- Header -->
+    <header class="bg-dark text-white sticky-top">
+        <div class="container p-0- m-0">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <a class="navbar-brand" href="#">
+                    <img src="images/logo.png" alt="Logo" class="logo profile rounded" height="50px">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button"
+                                data-bs-toggle="dropdown">Category</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/scientific">Scientific Calculator</a></li>
+                                <li><a class="dropdown-item" href="/financial">Financial Calculators</a></li>
+                                <li><a class="dropdown-item" href="/health">Health and Fitness Calculators</a></li>
+                                <li><a class="dropdown-item" href="/conversion">Conversion Calculators</a></li>
+                                <li><a class="dropdown-item" href="/algebra">Math and Algebra Calculators</a></li>
+                                <li><a class="dropdown-item" href="/geometry">Geometry Calculators</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-item" id="login-buttons"><a class="nav-link" href="#" data-bs-toggle="modal"
+                                data-bs-target="#loginModal">Login</a></li>
+                        <li class="dropdown-item" id="signup-buttons"><a class="nav-link" href="#"
+                                data-bs-toggle="modal" data-bs-target="#signupModal">Signup</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal"
+                                data-bs-target="#contactModal">Contact</a></li>
+                    </ul>
+                    <form class="me-3 position-relative">
+                        <input type="text" id="searchBar" class="form-control" placeholder="Search for a calculator..."
+                            onkeyup="searchCalculators()">
+                        <ul id="calculatorList" class="dropdown-menu w-100 mt-1 overflow-hidden">
+                            <!-- Calculator names dynamically filtered here with anchor tags -->
+                            <li class="dropdown-item calculator-item"><a href="/scientific">Scientific Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/financial">Simple Interest
+                                    Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/financial">Compound Interest
+                                    Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/financial">Currency Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/financial">Salary Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/financial">Retirement Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/financial">Sales and Tax Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/financial">Investment Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/health">BMI Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/health">BMR Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/health">Calorie Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/health">Body Fat Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/health">Ideal Weight Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/conversion">Length Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/conversion">Age Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/conversion">Hour to Minute & Seconds
+                                    Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/conversion">Date Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/conversion">GPA Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/conversion">Height Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/conversion">Password Generator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/conversion">Bill and Tip Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">2D Distance Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">3D Distance Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">Equilateral Triangle
+                                    Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">Isosceles Triangle
+                                    Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">Right-Angled Triangle
+                                    Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">Cube Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">Cone Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">Circle Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">Cylinder Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">Rectangle Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">Square Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/geometry">Sphere Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Complex Number Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Boolean Algebra Simplifier</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Partial Fraction Decomposer</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Inequality Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Flow Rate Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Impulse Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Factorization Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Percentage Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Exponential Formulas
+                                    Calculator</a></li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Cube of a Number Calculator</a>
+                            </li>
+                            <li class="dropdown-item calculator-item"><a href="/algebra">Cube Root Calculator</a></li>
+                        </ul>
+                    </form>
+                    <div class="flex-shrink-0 dropdown" id="profiles-div">
+                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="images/user.png" alt="mdo" width="32" height="32" class="rounded-circle border">
+                        </a>
+                        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                            <li class="dropdown-item d-none" id="username"></li>
+                            <li class="dropdown-item d-none" id="logout-button"><a class="nav-link text-danger"
+                                    href="/logout">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+
+    <section id="home" class="banner d-none">
+        <div class="carousel slide" id="bannerCarousel" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="images/banner1.jpg" class="d-block w-100" alt="Banner 1" width=100% height="500">
+                    <div class="carousel-caption">
+                        <h3>Welcome to Our Website</h3>
+                        <p>All in one calculator</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/banner2.jpg" class="d-block w-100" alt="Banner 2" width=100% height="500">
+                    <div class="carousel-caption">
+                        <h3>All in one calculator</h3>
+                        <p>Welcome to Our Website</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Calculators Section -->
+    <div class="container">
+        <h1>Math and Algebra Calculator</h1>
+        <div class="calculator">
+            <div class="calculator-tab">
+                <button class="tab-link" onclick="openCalculator(event, 'complex')">Complex Number</button>
+                <button class="tab-link" onclick="openCalculator(event, 'boolean')">Boolean Algebra</button>
+                <button class="tab-link" onclick="openCalculator(event, 'partial')">Partial Fractions</button>
+                <button class="tab-link" onclick="openCalculator(event, 'inequality')">Inequality</button>
+                <button class="tab-link" onclick="openCalculator(event, 'flowRate')">Flow Rate</button>
+                <button class="tab-link" onclick="openCalculator(event, 'impulse')">Impulse</button>
+                <button class="tab-link" onclick="openCalculator(event, 'factorization')">Factorization</button>
+                <button class="tab-link" onclick="openCalculator(event, 'percentage')">Percentage</button>
+                <button class="tab-link" onclick="openCalculator(event, 'exponential')">Exponential</button>
+                <button class="tab-link" onclick="openCalculator(event, 'cube')">Cube</button>
+                <button class="tab-link" onclick="openCalculator(event, 'cubeRoot')">Cube Root</button>
+            </div>
+
+            <!-- Complex Number Calculator -->
+            <div id="complex" class="calculator-content">
+                <h2>Complex Number Calculator</h2>
+                <input type="number" id="real1" placeholder="Real Part 1">
+                <input type="number" id="imag1" placeholder="Imaginary Part 1">
+                <input type="number" id="real2" placeholder="Real Part 2">
+                <input type="number" id="imag2" placeholder="Imaginary Part 2">
+                <button onclick="complexNumberOperations('add')">Add</button>
+                <button onclick="complexNumberOperations('subtract')">Subtract</button>
+                <button onclick="complexNumberOperations('multiply')">Multiply</button>
+                <div id="complexResult"></div>
+            </div>
+
+            <!-- Boolean Algebra Simplifier -->
+            <div id="boolean" class="calculator-content">
+                <h2>Boolean Algebra Simplifier</h2>
+                <input type="text" id="booleanExpression" placeholder="Enter Boolean Expression">
+                <button onclick="simplifyBooleanExpression()">Simplify</button>
+                <div id="booleanResult"></div>
+            </div>
+
+            <!-- Partial Fraction Decomposer -->
+            <div id="partial" class="calculator-content">
+                <h2>Partial Fraction Decomposer</h2>
+                <input type="text" id="rationalFunction" placeholder="Enter Rational Function">
+                <button onclick="decomposePartialFraction()">Decompose</button>
+                <div id="partialResult"></div>
+            </div>
+
+
+            <!-- Inequality Calculator -->
+            <div id="inequality" class="calculator-content">
+                <h2>Inequality Calculator</h2>
+                <input type="text" id="inequalityExpression" placeholder="Enter Inequality">
+                <button onclick="solveInequality()">Solve</button>
+                <div id="inequalityResult"></div>
+            </div>
+
+            <!-- Flow Rate Calculator -->
+            <div id="flowRate" class="calculator-content">
+                <h2>Flow Rate Calculator</h2>
+                <input type="number" id="pipeDiameter" placeholder="Pipe Diameter (m)">
+                <input type="number" id="velocity" placeholder="Velocity (m/s)">
+                <button onclick="calculateFlowRate()">Calculate Flow Rate</button>
+                <div id="flowRateResult"></div>
+            </div>
+
+            <!-- Impulse Calculator -->
+            <div id="impulse" class="calculator-content">
+                <h2>Impulse Calculator</h2>
+                <input type="number" id="force" placeholder="Force (N)">
+                <input type="number" id="time" placeholder="Time (s)">
+                <button onclick="calculateImpulse()">Calculate Impulse</button>
+                <div id="impulseResult"></div>
+            </div>
+
+            <!-- Factorization Calculator -->
+            <div id="factorization" class="calculator-content">
+                <h2>Factorization Calculator</h2>
+                <input type="number" id="factorizeNumber" placeholder="Enter Integer">
+                <button onclick="calculateFactorization()">Factorize</button>
+                <div id="factorizationResult"></div>
+            </div>
+
+            <!-- Percentage Calculator -->
+            <div id="percentage" class="calculator-content">
+                <h2>Percentage Calculator</h2>
+                <input type="number" id="originalValue" placeholder="Original Value">
+                <input type="number" id="percentageChange" placeholder="Percentage Change">
+                <button onclick="calculatePercentage()">Calculate New Value</button>
+                <div id="percentageResult"></div>
+            </div>
+
+            <!-- Exponential Calculator -->
+            <div id="exponential" class="calculator-content">
+                <h2>Exponential Calculator</h2>
+                <input type="number" id="base" placeholder="Base">
+                <input type="number" id="exponent" placeholder="Exponent">
+                <button onclick="calculateExponential()">Calculate Exponential</button>
+                <div id="exponentialResult"></div>
+            </div>
+
+            <!-- Cube Calculator -->
+            <div id="cube" class="calculator-content">
+                <h2>Cube Calculator</h2>
+                <input type="number" id="cubeNumber" placeholder="Enter Number">
+                <button onclick="calculateCube()">Calculate Cube</button>
+                <div id="cubeResult"></div>
+            </div>
+
+            <!-- Cube Root Calculator -->
+            <div id="cubeRoot" class="calculator-content">
+                <h2>Cube Root Calculator</h2>
+                <input type="number" id="cubeRootNumber" placeholder="Enter Number">
+                <button onclick="calculateCubeRoot()">Calculate Cube Root</button>
+                <div id="cubeRootResult"></div>
+            </div>
+        </div>
+        <div>
+
+
+
+            <!-- Modals -->
+            <div class="modal fade" id="loginModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5>Login</h5>
+                        </div>
+                        <form action="/login" method="POST">
+                            <div class="modal-body">
+                                <input type="text" id="loginUsername" placeholder="Username" name="username"
+                                    class="form-control mb-3">
+                                <input type="password" id="loginPassword" placeholder="Password" name="password"
+                                    class="form-control">
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <input type="submit" class="btn btn-primary" value="Login">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="signupModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5>Signup</h5>
+                        </div>
+                        <form action="/register" method="POST">
+                            <div class="modal-body">
+                                <input type="text" name="username" id="signupUsername" placeholder="Username"
+                                    class="form-control mb-3">
+                                <input type="email" name="email" id="signupEmail" placeholder="Email"
+                                    class="form-control mb-3">
+                                <input type="number" name="mobile" id="signupmob" placeholder="Mobile"
+                                    class="form-control mb-3">
+                                <input type="password" name="password" id="signupPassword" placeholder="Password"
+                                    class="form-control">
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button class="btn btn-primary" type="submit">Signup</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="contactModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5>Contact Us</h5>
+                        </div>
+                        <form action="/contact" method="POST">
+                            <div class="modal-body">
+                                <input type="text" id="contactName" placeholder="Name" class="form-control mb-3"
+                                    name="name" required>
+                                <input type="email" id="contactEmail" placeholder="Email" class="form-control mb-3"
+                                    name="email" required>
+                                <textarea id="contactMessage" placeholder="Message" class="form-control"
+                                    name="message"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <input type="submit" class="btn btn-primary" value="Submit">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modals -->
+            <div class="modal fade" id="calculatorModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Calculator</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div id="calculatorContent">
+                                <!-- Calculator content dynamically loaded via JavaScript -->
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.9.0/math.min.js"></script>
+
+
+            <script>
+
+                function openCalculator(evt, calculatorName) {
+                    var i, tabContent, tabLinks;
+                    tabContent = document.getElementsByClassName("calculator-content");
+                    for (i = 0; i < tabContent.length; i++) {
+                        tabContent[i].style.display = "none";
+                    }
+                    tabLinks = document.getElementsByClassName("tab-link");
+                    for (i = 0; i < tabLinks.length; i++) {
+                        tabLinks[i].classList.remove("active");
+                    }
+                    document.getElementById(calculatorName).style.display = "block";
+                    evt.currentTarget.classList.add("active");
+                }
+
+                // Complex Number Calculator Logic
+                function complexNumberOperations(operation) {
+                    const real1 = parseFloat(document.getElementById("real1").value);
+                    const imag1 = parseFloat(document.getElementById("imag1").value);
+                    const real2 = parseFloat(document.getElementById("real2").value);
+                    const imag2 = parseFloat(document.getElementById("imag2").value);
+
+                    if (isNaN(real1) || isNaN(imag1) || isNaN(real2) || isNaN(imag2)) {
+                        alert("Please enter valid numbers");
+                        return;
+                    }
+
+                    let resultReal, resultImag;
+                    if (operation === 'add') {
+                        resultReal = real1 + real2;
+                        resultImag = imag1 + imag2;
+                    } else if (operation === 'subtract') {
+                        resultReal = real1 - real2;
+                        resultImag = imag1 - imag2;
+                    } else if (operation === 'multiply') {
+                        resultReal = real1 * real2 - imag1 * imag2;
+                        resultImag = real1 * imag2 + imag1 * real2;
+                    }
+
+                    document.getElementById("complexResult").innerHTML = `Result: ${resultReal} + ${resultImag}i`;
+                }
+
+                // Boolean Algebra Simplifier Logic
+                function simplifyBooleanExpression() {
+                    const expression = document.getElementById("booleanExpression").value.trim();
+                    const resultElement = document.getElementById("booleanResult");
+
+                    if (expression === "") {
+                        resultElement.innerText = "Please enter a Boolean expression.";
+                        return;
+                    }
+
+                    try {
+                        // Step 1: Parse the input expression
+                        const parsedExpression = parseExpression(expression);
+
+                        // Step 2: Simplify using Boolean laws
+                        const simplifiedExpression = simplifyUsingLaws(parsedExpression);
+
+                        // Step 3: Validate and display the result
+                        resultElement.innerText = `Simplified Boolean Expression: ${simplifiedExpression}`;
+                    } catch (error) {
+                        resultElement.innerText = "Invalid Boolean expression.";
+                        console.error(error);
+                    }
+                }
+
+                // Parse the input expression
+                function parseExpression(expression) {
+                    // Replace logical operators for consistency
+                    return expression
+                        .replace(/\s+/g, "") // Remove spaces
+                        .replace(/AND/gi, "&")
+                        .replace(/OR/gi, "|")
+                        .replace(/NOT/gi, "!");
+                }
+
+                // Simplify using Boolean laws
+                function simplifyUsingLaws(expression) {
+                    let result = expression;
+
+                    // Step 1: Apply De Morgan's Laws
+                    // !(A & B) -> !A | !B
+                    result = result.replace(/!\((\w)&(\w)\)/g, "!$1|!$2");
+                    // !(A | B) -> !A & !B
+                    result = result.replace(/!\((\w)\|(\w)\)/g, "!$1&!$2");
+
+                    // Step 2: Apply Redundancy Elimination
+                    // A | A = A, A & A = A
+                    result = result.replace(/(\w)\|(\1)/g, "$1");
+                    result = result.replace(/(\w)&(\1)/g, "$1");
+
+                    // Step 3: Simplify Double Negations
+                    // !!A = A
+                    result = result.replace(/!!(\w)/g, "$1");
+
+                    // Step 4: Apply Constant Elimination
+                    // A & 1 = A, A | 0 = A
+                    result = result.replace(/(\w)&1/g, "$1");
+                    result = result.replace(/(\w)\|0/g, "$1");
+                    // A & 0 = 0, A | 1 = 1
+                    result = result.replace(/(\w)&0/g, "0");
+                    result = result.replace(/(\w)\|1/g, "1");
+
+                    // Step 5: Apply Absorption Laws
+                    // A | (A & B) = A
+                    result = result.replace(/(\w)\|(\1&\w)/g, "$1");
+                    // A & (A | B) = A
+                    result = result.replace(/(\w)&(\1\|\w)/g, "$1");
+
+                    // Step 6: Apply Distributive Laws
+                    // A & (B | C) = (A & B) | (A & C)
+                    result = result.replace(/(\w)&\((\w)\|(\w)\)/g, "($1&$2)|($1&$3)");
+                    // A | (B & C) = (A | B) & (A | C)
+                    result = result.replace(/(\w)\|\((\w)&(\w)\)/g, "($1|$2)&($1|$3)");
+
+                    // Step 7: Apply Complement Laws
+                    // A | !A = 1, A & !A = 0
+                    result = result.replace(/(\w)\|\!\1/g, "1");
+                    result = result.replace(/(\w)&\!\1/g, "0");
+
+                    // Step 8: Apply Idempotent Laws
+                    // A | A = A, A & A = A
+                    result = result.replace(/(\w)\|\1/g, "$1");
+                    result = result.replace(/(\w)&\1/g, "$1");
+
+                    // Step 9: Apply Consensus Theorem
+                    // (A & B) | (!A & C) = (B | C)
+                    result = result.replace(/\((\w)&(\w)\)\|\(!\1&(\w)\)/g, "($2|$3)");
+
+                    // Step 10: Apply Distributive Expansion
+                    // A & (B & C) = (A & B) & C
+                    result = result.replace(/(\w)&\((\w)&(\w)\)/g, "($1&$2)&$3");
+                    // A | (B | C) = (A | B) | C
+                    result = result.replace(/(\w)\|\((\w)\|(\w)\)/g, "($1|$2)|$3");
+
+                    // Step 11: XOR Simplification
+                    // A ^ B = (A & !B) | (!A & B)
+                    result = result.replace(/(\w)\^(\w)/g, "($1&!$2)|(!$1&$2)");
+
+                    // Step 12: Apply Absorption Variants
+                    // (A & B) | (A & !B) = A
+                    result = result.replace(/\((\w)&(\w)\)\|\(\1&!\2\)/g, "$1");
+                    // (A | B) & (A | !B) = A
+                    result = result.replace(/\((\w)\|(\w)\)&\(\1\|!\2\)/g, "$1");
+
+                    // Step 13: Custom Rules (Example for NOR and NAND)
+                    // A NOR B = !(A | B)
+                    result = result.replace(/(\w)~\|(\w)/g, "!($1|$2)");
+                    // A NAND B = !(A & B)
+                    result = result.replace(/(\w)~&(\w)/g, "!($1&$2)");
+
+                    return result;
+                }
+
+                function iterativeSimplification(expression) {
+                    let prev = "";
+                    let current = expression;
+                    while (current !== prev) {
+                        prev = current;
+                        current = simplifyUsingLaws(current);
+                    }
+                    return current;
+                }
+
+
+
+
+
+                // Partial Fraction Decomposer Logic
+                function decomposePartialFraction() {
+                    const rationalFunction = document.getElementById("rationalFunction").value.trim();
+                    const resultElement = document.getElementById("partialResult");
+
+                    // Clear previous result
+                    resultElement.innerHTML = "";
+
+                    if (!rationalFunction) {
+                        resultElement.innerText = "Please enter a rational function (e.g., 1/(x^2 - 4)).";
+                        return;
+                    }
+
+                    // Extract numerator and denominator using regex
+                    const regex = /^([0-9]+)\s*\/\s*\((.+)\)$/;
+                    const match = rationalFunction.match(regex);
+
+                    if (!match) {
+                        resultElement.innerText = "Invalid input. Use the format: numerator/(denominator).";
+                        return;
+                    }
+
+                    const numerator = parseFloat(match[1]);
+                    const denominatorExpr = match[2].trim();
+
+                    // Handle specific cases for partial fraction decomposition
+
+                    if (denominatorExpr === "x^2 - 4") {
+                        // Case 1: x^2 - 4 = (x - 2)(x + 2)
+                        const A = numerator / 2;
+                        const B = -numerator / 2;
+                        resultElement.innerHTML = `<p>Decomposed: ${numerator}/(x^2 - 4) = ${A}/(x - 2) + ${B}/(x + 2)</p>`;
+                    } else if (denominatorExpr === "(x - 1)^2") {
+                        // Case 2: (x - 1)^2 (repeated root)
+                        const A = numerator;
+                        const B = 0;
+                        resultElement.innerHTML = `<p>Decomposed: ${numerator}/(x - 1)^2 = ${A}/(x - 1)^2 + ${B}/(x - 1)</p>`;
+                    } else if (denominatorExpr === "(x - 1)^3") {
+                        // Case 3: Repeated root (x - 1)^3
+                        const A = numerator;
+                        const B = 0;
+                        const C = 0;
+                        resultElement.innerHTML = `<p>Decomposed: ${numerator}/(x - 1)^3 = ${A}/(x - 1)^3 + ${B}/(x - 1)^2 + ${C}/(x - 1)</p>`;
+                    } else if (denominatorExpr === "x^2 + 3x + 2") {
+                        // Case 4: Irreducible quadratic x^2 + 3x + 2
+                        const A = numerator / 3;
+                        const B = -numerator / 2;
+                        resultElement.innerHTML = `<p>Decomposed: ${numerator}/(x^2 + 3x + 2) = ${A}/(x + 1) + ${B}/(x + 2)</p>`;
+                    } else if (denominatorExpr === "x^3 - x") {
+                        // Case 5: Cubic factorization x(x - 1)(x + 1)
+                        const A = numerator / 3;
+                        const B = 0;
+                        const C = 0;
+                        resultElement.innerHTML = `<p>Decomposed: ${numerator}/(x^3 - x) = ${A}/x + ${B}/(x - 1) + ${C}/(x + 1)</p>`;
+                    } else if (denominatorExpr === "x^2 - 1") {
+                        // Case 6: x^2 - 1 = (x - 1)(x + 1)
+                        const A = numerator / 2;
+                        const B = -numerator / 2;
+                        resultElement.innerHTML = `<p>Decomposed: ${numerator}/(x^2 - 1) = ${A}/(x - 1) + ${B}/(x + 1)</p>`;
+                    } else if (denominatorExpr === "(x - 2)(x + 3)") {
+                        // Case 7: Linear factors (x - 2)(x + 3)
+                        const A = numerator / 5;  // Simplified example for demonstration
+                        const B = -numerator / 5;
+                        resultElement.innerHTML = `<p>Decomposed: ${numerator}/((x - 2)(x + 3)) = ${A}/(x - 2) + ${B}/(x + 3)</p>`;
+                    } else if (denominatorExpr === "(x - 1)(x + 1)") {
+                        // Case 8: Linear factors (x - 1)(x + 1)
+                        const A = numerator / 2;
+                        const B = -numerator / 2;
+                        resultElement.innerHTML = `<p>Decomposed: ${numerator}/((x - 1)(x + 1)) = ${A}/(x - 1) + ${B}/(x + 1)</p>`;
+                    } else {
+                        resultElement.innerHTML = `<p>Decomposition not implemented for: ${denominatorExpr}</p>`;
+                    }
+                }
+
+
+
+                // Inequality Solver Logic
+                function solveInequality() {
+                    const inequalityInput = document.getElementById("inequalityExpression").value.trim();
+                    const resultElement = document.getElementById("inequalityResult");
+
+                    // Clear previous result
+                    resultElement.innerText = "";
+
+                    // Check if input is empty
+                    if (inequalityInput === "") {
+                        resultElement.innerText = "Please enter an inequality.";
+                        return;
+                    }
+
+                    // Handle Linear Inequalities (e.g., 2*x + 3 > 0, 4*x - 5 < 0)
+                    const linearRegex = /^(-?\d+)\s*\*?x\s*([+-]?\s*\d+)\s*([<>]=?)\s*0$/;
+                    const matchLinear = inequalityInput.match(linearRegex);
+
+                    if (matchLinear) {
+                        const a = parseFloat(matchLinear[1]);
+                        const b = parseFloat(matchLinear[2].replace(/\s+/g, '')); // Clean spaces from b term
+                        const operator = matchLinear[3].trim();
+
+                        let solution;
+
+                        // Solve for x in linear inequality
+                        if (operator === ">") {
+                            solution = `x > ${-b / a}`;
+                        } else if (operator === "<") {
+                            solution = `x < ${-b / a}`;
+                        } else if (operator === ">=") {
+                            solution = `x ≥ ${-b / a}`;
+                        } else if (operator === "<=") {
+                            solution = `x ≤ ${-b / a}`;
+                        }
+
+                        resultElement.innerText = `Solution: ${solution}`;
+                        return;
+                    }
+
+                    // Handle Quadratic Inequalities (e.g., x^2 - 4 > 0, 2*x^2 + 3*x - 2 < 0)
+                    const quadraticRegex = /^(-?\d+)\s*\*?x\^2\s*([+-]?\s*\d+)\s*\*?x\s*([+-]?\s*\d+)\s*([<>]=?)\s*0$/;
+                    const matchQuadratic = inequalityInput.match(quadraticRegex);
+
+                    if (matchQuadratic) {
+                        const a = parseFloat(matchQuadratic[1]);
+                        const b = parseFloat(matchQuadratic[2].replace(/\s+/g, '')) || 0;
+                        const c = parseFloat(matchQuadratic[3].replace(/\s+/g, '')) || 0;
+                        const operator = matchQuadratic[4].trim();
+
+                        // Calculate discriminant (Delta = b^2 - 4ac)
+                        const discriminant = b * b - 4 * a * c;
+                        let solution;
+
+                        // If discriminant < 0: no real roots, check the sign of a
+                        if (discriminant < 0) {
+                            if (a > 0 && operator === ">") {
+                                solution = `Solution: x ∈ (-∞, ∞)`;
+                            } else if (a < 0 && operator === "<") {
+                                solution = `Solution: x ∈ (-∞, ∞)`;
+                            } else {
+                                solution = "Solution: No solution.";
+                            }
+                        }
+                        // If discriminant == 0: one real root
+                        else if (discriminant === 0) {
+                            const root = -b / (2 * a);
+                            if (operator === ">") {
+                                solution = `Solution: x > ${root}`;
+                            } else if (operator === "<") {
+                                solution = `Solution: x < ${root}`;
+                            } else if (operator === ">=") {
+                                solution = `Solution: x ≥ ${root}`;
+                            } else if (operator === "<=") {
+                                solution = `Solution: x ≤ ${root}`;
+                            }
+                        }
+                        // If discriminant > 0: two real roots
+                        else {
+                            const sqrtDisc = Math.sqrt(discriminant);
+                            const root1 = (-b + sqrtDisc) / (2 * a);
+                            const root2 = (-b - sqrtDisc) / (2 * a);
+
+                            if (a > 0) {
+                                if (operator === ">") {
+                                    solution = `Solution: x < ${root2} or x > ${root1}`;
+                                } else if (operator === "<") {
+                                    solution = `Solution: ${root2} < x < ${root1}`;
+                                } else if (operator === ">=") {
+                                    solution = `Solution: x ≤ ${root2} or x ≥ ${root1}`;
+                                } else if (operator === "<=") {
+                                    solution = `Solution: ${root2} ≤ x ≤ ${root1}`;
+                                }
+                            } else {
+                                if (operator === ">") {
+                                    solution = `Solution: ${root2} < x < ${root1}`;
+                                } else if (operator === "<") {
+                                    solution = `Solution: x < ${root2} or x > ${root1}`;
+                                } else if (operator === ">=") {
+                                    solution = `Solution: x ≥ ${root2} or x ≤ ${root1}`;
+                                } else if (operator === "<=") {
+                                    solution = `Solution: ${root2} ≤ x ≤ ${root1}`;
+                                }
+                            }
+                        }
+
+                        resultElement.innerText = solution;
+                        return;
+                    }
+
+                    // If the input doesn't match linear or quadratic formats
+                    resultElement.innerText = "Inequality format not recognized. Please follow the format.";
+                }
+
+                // Flow Rate Calculator Logic
+                function calculateFlowRate() {
+                    const diameter = parseFloat(document.getElementById("pipeDiameter").value);
+                    const velocity = parseFloat(document.getElementById("velocity").value);
+                    const flowRate = Math.PI * Math.pow(diameter / 2, 2) * velocity;
+                    document.getElementById("flowRateResult").innerHTML = `Flow Rate: ${flowRate.toFixed(2)} cubic meters per second`;
+                }
+
+                // Impulse Calculator Logic
+                function calculateImpulse() {
+                    const force = parseFloat(document.getElementById("force").value);
+                    const time = parseFloat(document.getElementById("time").value);
+                    const impulse = force * time;
+                    document.getElementById("impulseResult").innerHTML = `Impulse: ${impulse.toFixed(2)} Ns`;
+                }
+
+                // Factorization Calculator Logic
+                function calculateFactorization() {
+                    const number = parseInt(document.getElementById("factorizeNumber").value);
+                    let factors = [];
+                    for (let i = 2; i <= number; i++) {
+                        while (number % i === 0) {
+                            factors.push(i);
+                            number /= i;
+                        }
+                    }
+                    document.getElementById("factorizationResult").innerHTML = `Prime Factors: ${factors.join(' x ')}`;
+                }
+
+                // Percentage Calculator Logic
+                function calculatePercentage() {
+                    const originalValue = parseFloat(document.getElementById("originalValue").value);
+                    const percentageChange = parseFloat(document.getElementById("percentageChange").value);
+                    const newValue = originalValue * (1 + percentageChange / 100);
+                    document.getElementById("percentageResult").innerHTML = `New Value: ${newValue.toFixed(2)}`;
+                }
+
+                // Exponential Calculator Logic
+                function calculateExponential() {
+                    const base = parseFloat(document.getElementById("base").value);
+                    const exponent = parseFloat(document.getElementById("exponent").value);
+                    const result = Math.pow(base, exponent);
+                    document.getElementById("exponentialResult").innerHTML = `Result: ${result.toFixed(2)}`;
+                }
+
+                // Cube Calculator Logic
+                function calculateCube() {
+                    const number = parseFloat(document.getElementById("cubeNumber").value);
+                    const cube = Math.pow(number, 3);
+                    document.getElementById("cubeResult").innerHTML = `Cube: ${cube.toFixed(2)}`;
+                }
+
+                // Cube Root Calculator Logic
+                function calculateCubeRoot() {
+                    const number = parseFloat(document.getElementById("cubeRootNumber").value);
+                    const cubeRoot = Math.cbrt(number);
+                    document.getElementById("cubeRootResult").innerHTML = `Cube Root: ${cubeRoot.toFixed(2)}`;
+                }
+            </script>
+
+
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="script.js"></script>
+            <br>
+            <p align="center">&copy; 2024 Financial Calculators. All Rights Reserved.</p>
+</body>
+
+</html>
